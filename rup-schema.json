@@ -19,13 +19,17 @@
       "type": "string",
       "pattern": "^\\d+\\.\\d+\\.\\d+$",
       "description": "Semantic version of the schema",
-      "examples": ["2.1.0"]
+      "examples": [
+        "2.1.0"
+      ]
     },
     "protocol_version": {
       "type": "string",
       "pattern": "^\\d+\\.\\d+\\.\\d+$",
       "description": "Semantic version of the protocol",
-      "examples": ["2.1.0"]
+      "examples": [
+        "2.1.0"
+      ]
     },
     "last_updated": {
       "type": "string",
@@ -35,7 +39,11 @@
     "license": {
       "type": "string",
       "description": "SPDX license identifier",
-      "examples": ["CC0-1.0", "MIT", "Apache-2.0"]
+      "examples": [
+        "CC0-1.0",
+        "MIT",
+        "Apache-2.0"
+      ]
     },
     "maintainer": {
       "type": "string",
@@ -108,7 +116,10 @@
   "$defs": {
     "Metadata": {
       "type": "object",
-      "required": ["name", "changelog"],
+      "required": [
+        "name",
+        "changelog"
+      ],
       "properties": {
         "name": {
           "type": "string",
@@ -143,7 +154,11 @@
     },
     "ChangelogEntry": {
       "type": "object",
-      "required": ["version", "date", "changes"],
+      "required": [
+        "version",
+        "date",
+        "changes"
+      ],
       "properties": {
         "version": {
           "type": "string",
@@ -165,7 +180,11 @@
     },
     "EvaluationHistoryEntry": {
       "type": "object",
-      "required": ["version", "repos_tested", "success_rate"],
+      "required": [
+        "version",
+        "repos_tested",
+        "success_rate"
+      ],
       "properties": {
         "version": {
           "type": "string",
@@ -248,7 +267,9 @@
     },
     "DecisionBranch": {
       "type": "object",
-      "required": ["action"],
+      "required": [
+        "action"
+      ],
       "properties": {
         "action": {
           "type": "string"
@@ -261,7 +282,10 @@
     },
     "Scenario": {
       "type": "object",
-      "required": ["name", "steps"],
+      "required": [
+        "name",
+        "steps"
+      ],
       "properties": {
         "name": {
           "type": "string"
@@ -344,7 +368,9 @@
     },
     "AgentArchitecture": {
       "type": "object",
-      "required": ["agents"],
+      "required": [
+        "agents"
+      ],
       "properties": {
         "overview": {
           "type": "string"
@@ -365,7 +391,11 @@
     },
     "AgentDefinition": {
       "type": "object",
-      "required": ["id", "responsibility", "scope"],
+      "required": [
+        "id",
+        "responsibility",
+        "scope"
+      ],
       "properties": {
         "id": {
           "type": "string",
@@ -403,7 +433,15 @@
       "properties": {
         "type": {
           "type": "string",
-          "enum": ["object", "array", "string", "number", "integer", "boolean", "null"]
+          "enum": [
+            "object",
+            "array",
+            "string",
+            "number",
+            "integer",
+            "boolean",
+            "null"
+          ]
         },
         "required": {
           "type": "array",
@@ -472,7 +510,10 @@
     },
     "ErrorMode": {
       "type": "object",
-      "required": ["code", "action"],
+      "required": [
+        "code",
+        "action"
+      ],
       "properties": {
         "code": {
           "type": "string",
@@ -480,7 +521,12 @@
         },
         "severity": {
           "type": "string",
-          "enum": ["critical", "error", "warning", "info"]
+          "enum": [
+            "critical",
+            "error",
+            "warning",
+            "info"
+          ]
         },
         "action": {
           "type": "string"
@@ -511,7 +557,10 @@
     },
     "ToolDefinition": {
       "type": "object",
-      "required": ["name", "description"],
+      "required": [
+        "name",
+        "description"
+      ],
       "properties": {
         "name": {
           "type": "string",
@@ -550,7 +599,9 @@
     },
     "PriorityLevel": {
       "type": "object",
-      "required": ["description"],
+      "required": [
+        "description"
+      ],
       "properties": {
         "description": {
           "type": "string"
@@ -683,7 +734,10 @@
     },
     "MetricDefinition": {
       "type": "object",
-      "required": ["metric", "target"],
+      "required": [
+        "metric",
+        "target"
+      ],
       "properties": {
         "metric": {
           "type": "string"
@@ -702,7 +756,10 @@
     },
     "Phase": {
       "type": "object",
-      "required": ["id", "name"],
+      "required": [
+        "id",
+        "name"
+      ],
       "properties": {
         "id": {
           "type": "string",
@@ -739,7 +796,10 @@
     },
     "PhaseStep": {
       "type": "object",
-      "required": ["id", "name"],
+      "required": [
+        "id",
+        "name"
+      ],
       "properties": {
         "id": {
           "type": "string"
@@ -758,7 +818,10 @@
     },
     "Workstream": {
       "type": "object",
-      "required": ["id", "priority"],
+      "required": [
+        "id",
+        "priority"
+      ],
       "properties": {
         "id": {
           "type": "string",
@@ -766,7 +829,12 @@
         },
         "priority": {
           "type": "string",
-          "enum": ["P0", "P1", "P2", "P3"]
+          "enum": [
+            "P0",
+            "P1",
+            "P2",
+            "P3"
+          ]
         },
         "description": {
           "type": "string"
@@ -837,7 +905,11 @@
     },
     "CommitProtocol": {
       "type": "object",
-      "required": ["standard", "format", "types"],
+      "required": [
+        "standard",
+        "format",
+        "types"
+      ],
       "properties": {
         "standard": {
           "type": "string"
@@ -897,7 +969,10 @@
     },
     "CommitType": {
       "type": "object",
-      "required": ["type", "description"],
+      "required": [
+        "type",
+        "description"
+      ],
       "properties": {
         "type": {
           "type": "string",
@@ -907,7 +982,10 @@
           "type": "string"
         },
         "semver": {
-          "type": ["string", "null"]
+          "type": [
+            "string",
+            "null"
+          ]
         },
         "example": {
           "type": "string"
@@ -1018,7 +1096,9 @@
     },
     "ErrorStrategy": {
       "type": "object",
-      "required": ["action"],
+      "required": [
+        "action"
+      ],
       "properties": {
         "action": {
           "type": "string"
@@ -1078,7 +1158,9 @@
     },
     "ScalingTier": {
       "type": "object",
-      "required": ["criteria"],
+      "required": [
+        "criteria"
+      ],
       "properties": {
         "criteria": {
           "type": "object",
@@ -1203,7 +1285,9 @@
     },
     "TroubleshootingIssue": {
       "type": "object",
-      "required": ["issue"],
+      "required": [
+        "issue"
+      ],
       "properties": {
         "issue": {
           "type": "string"
@@ -1363,11 +1447,23 @@
       "title": "Discovery Report Output",
       "description": "Schema for discovery_agent output",
       "type": "object",
-      "required": ["repo_metadata", "languages", "tooling", "gaps", "risk_assessment"],
+      "required": [
+        "repo_metadata",
+        "languages",
+        "tooling",
+        "gaps",
+        "risk_assessment"
+      ],
       "properties": {
         "repo_metadata": {
           "type": "object",
-          "required": ["name", "primary_language", "repo_type", "loc", "file_count"],
+          "required": [
+            "name",
+            "primary_language",
+            "repo_type",
+            "loc",
+            "file_count"
+          ],
           "properties": {
             "name": {
               "type": "string"
@@ -1380,7 +1476,14 @@
             },
             "repo_type": {
               "type": "string",
-              "enum": ["library", "application", "service", "cli", "monorepo", "unknown"]
+              "enum": [
+                "library",
+                "application",
+                "service",
+                "cli",
+                "monorepo",
+                "unknown"
+              ]
             },
             "loc": {
               "type": "integer",
@@ -1407,11 +1510,17 @@
               "minimum": 0
             },
             "stars": {
-              "type": ["integer", "null"],
+              "type": [
+                "integer",
+                "null"
+              ],
               "minimum": 0
             },
             "license": {
-              "type": ["string", "null"]
+              "type": [
+                "string",
+                "null"
+              ]
             }
           }
         },
@@ -1419,7 +1528,10 @@
           "type": "array",
           "items": {
             "type": "object",
-            "required": ["name", "percentage"],
+            "required": [
+              "name",
+              "percentage"
+            ],
             "properties": {
               "name": {
                 "type": "string"
@@ -1430,13 +1542,19 @@
                 "maximum": 100
               },
               "package_manager": {
-                "type": ["string", "null"]
+                "type": [
+                  "string",
+                  "null"
+                ]
               },
               "lockfile_present": {
                 "type": "boolean"
               },
               "version_detected": {
-                "type": ["string", "null"]
+                "type": [
+                  "string",
+                  "null"
+                ]
               }
             }
           }
@@ -1445,25 +1563,46 @@
           "type": "object",
           "properties": {
             "test_framework": {
-              "type": ["string", "null"]
+              "type": [
+                "string",
+                "null"
+              ]
             },
             "test_location": {
-              "type": ["string", "null"]
+              "type": [
+                "string",
+                "null"
+              ]
             },
             "linter": {
-              "type": ["string", "null"]
+              "type": [
+                "string",
+                "null"
+              ]
             },
             "formatter": {
-              "type": ["string", "null"]
+              "type": [
+                "string",
+                "null"
+              ]
             },
             "type_checker": {
-              "type": ["string", "null"]
+              "type": [
+                "string",
+                "null"
+              ]
             },
             "build_tool": {
-              "type": ["string", "null"]
+              "type": [
+                "string",
+                "null"
+              ]
             },
             "ci_platform": {
-              "type": ["string", "null"]
+              "type": [
+                "string",
+                "null"
+              ]
             },
             "ci_workflows": {
               "type": "array",
@@ -1472,22 +1611,40 @@
               }
             },
             "containerization": {
-              "type": ["string", "null"]
+              "type": [
+                "string",
+                "null"
+              ]
             },
             "iac_tool": {
-              "type": ["string", "null"]
+              "type": [
+                "string",
+                "null"
+              ]
             }
           }
         },
         "monorepo": {
-          "type": ["object", "null"],
+          "type": [
+            "object",
+            "null"
+          ],
           "properties": {
             "is_monorepo": {
               "type": "boolean"
             },
             "tool": {
               "type": "string",
-              "enum": ["nx", "turborepo", "lerna", "bazel", "pnpm", "rush", "custom", "none"]
+              "enum": [
+                "nx",
+                "turborepo",
+                "lerna",
+                "bazel",
+                "pnpm",
+                "rush",
+                "custom",
+                "none"
+              ]
             },
             "packages": {
               "type": "array",
@@ -1505,7 +1662,12 @@
                   },
                   "type": {
                     "type": "string",
-                    "enum": ["app", "lib", "service", "tool"]
+                    "enum": [
+                      "app",
+                      "lib",
+                      "service",
+                      "tool"
+                    ]
                   }
                 }
               }
@@ -1520,11 +1682,18 @@
         },
         "risk_assessment": {
           "type": "object",
-          "required": ["overall_risk"],
+          "required": [
+            "overall_risk"
+          ],
           "properties": {
             "overall_risk": {
               "type": "string",
-              "enum": ["low", "medium", "high", "critical"]
+              "enum": [
+                "low",
+                "medium",
+                "high",
+                "critical"
+              ]
             },
             "risk_factors": {
               "type": "array",
@@ -1560,7 +1729,12 @@
     },
     "Gap": {
       "type": "object",
-      "required": ["id", "category", "severity", "title"],
+      "required": [
+        "id",
+        "category",
+        "severity",
+        "title"
+      ],
       "properties": {
         "id": {
           "type": "string",
@@ -1568,11 +1742,24 @@
         },
         "category": {
           "type": "string",
-          "enum": ["tests", "docs", "ci", "security", "governance", "performance", "dx"]
+          "enum": [
+            "tests",
+            "docs",
+            "ci",
+            "security",
+            "governance",
+            "performance",
+            "dx"
+          ]
         },
         "severity": {
           "type": "string",
-          "enum": ["critical", "high", "medium", "low"]
+          "enum": [
+            "critical",
+            "high",
+            "medium",
+            "low"
+          ]
         },
         "title": {
           "type": "string"
@@ -1588,7 +1775,13 @@
         },
         "effort_estimate": {
           "type": "string",
-          "enum": ["trivial", "small", "medium", "large", "xlarge"]
+          "enum": [
+            "trivial",
+            "small",
+            "medium",
+            "large",
+            "xlarge"
+          ]
         },
         "files_affected": {
           "type": "array",
@@ -1603,7 +1796,12 @@
       "title": "Plan Output",
       "description": "Schema for planning_agent output",
       "type": "object",
-      "required": ["backlog", "selected_items", "execution_order", "estimated_effort"],
+      "required": [
+        "backlog",
+        "selected_items",
+        "execution_order",
+        "estimated_effort"
+      ],
       "properties": {
         "backlog": {
           "type": "array",
@@ -1634,7 +1832,11 @@
             },
             "rollback_complexity": {
               "type": "string",
-              "enum": ["trivial", "moderate", "complex"]
+              "enum": [
+                "trivial",
+                "moderate",
+                "complex"
+              ]
             },
             "affected_packages": {
               "type": "array",
@@ -1646,7 +1848,10 @@
         },
         "estimated_effort": {
           "type": "object",
-          "required": ["total_minutes", "confidence"],
+          "required": [
+            "total_minutes",
+            "confidence"
+          ],
           "properties": {
             "total_minutes": {
               "type": "integer",
@@ -1654,7 +1859,11 @@
             },
             "confidence": {
               "type": "string",
-              "enum": ["low", "medium", "high"]
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ]
             },
             "breakdown": {
               "type": "object",
@@ -1669,14 +1878,23 @@
     },
     "BacklogItem": {
       "type": "object",
-      "required": ["id", "priority", "title"],
+      "required": [
+        "id",
+        "priority",
+        "title"
+      ],
       "properties": {
         "id": {
           "type": "string"
         },
         "priority": {
           "type": "string",
-          "enum": ["P0", "P1", "P2", "P3"]
+          "enum": [
+            "P0",
+            "P1",
+            "P2",
+            "P3"
+          ]
         },
         "category": {
           "type": "string"
@@ -1706,7 +1924,11 @@
         },
         "risk": {
           "type": "string",
-          "enum": ["low", "medium", "high"]
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ]
         },
         "estimated_effort_minutes": {
           "type": "integer",
@@ -1734,7 +1956,11 @@
       "title": "Execution Output",
       "description": "Schema for execution_agent output",
       "type": "object",
-      "required": ["changes", "commits", "local_verification"],
+      "required": [
+        "changes",
+        "commits",
+        "local_verification"
+      ],
       "properties": {
         "changes": {
           "type": "array",
@@ -1762,23 +1988,42 @@
     },
     "FileChange": {
       "type": "object",
-      "required": ["file_path", "change_type"],
+      "required": [
+        "file_path",
+        "change_type"
+      ],
       "properties": {
         "file_path": {
           "type": "string"
         },
         "change_type": {
           "type": "string",
-          "enum": ["create", "modify", "delete", "rename", "chmod"]
+          "enum": [
+            "create",
+            "modify",
+            "delete",
+            "rename",
+            "chmod"
+          ]
         },
         "old_path": {
-          "type": ["string", "null"]
+          "type": [
+            "string",
+            "null"
+          ]
         },
         "diff": {
-          "type": "string"
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Unified diff for modified files; null for newly created files"
         },
         "full_content": {
-          "type": ["string", "null"]
+          "type": [
+            "string",
+            "null"
+          ]
         },
         "rationale": {
           "type": "string"
@@ -1791,10 +2036,16 @@
     },
     "Commit": {
       "type": "object",
-      "required": ["message", "files"],
+      "required": [
+        "message",
+        "files"
+      ],
       "properties": {
         "hash": {
-          "type": ["string", "null"]
+          "type": [
+            "string",
+            "null"
+          ]
         },
         "message": {
           "type": "string"
@@ -1809,7 +2060,10 @@
           "type": "string"
         },
         "scope": {
-          "type": ["string", "null"]
+          "type": [
+            "string",
+            "null"
+          ]
         },
         "breaking": {
           "type": "boolean"
@@ -1843,7 +2097,9 @@
     },
     "VerificationResult": {
       "type": "object",
-      "required": ["executed"],
+      "required": [
+        "executed"
+      ],
       "properties": {
         "executed": {
           "type": "boolean"
@@ -1859,7 +2115,11 @@
     },
     "Artifact": {
       "type": "object",
-      "required": ["name", "path", "type"],
+      "required": [
+        "name",
+        "path",
+        "type"
+      ],
       "properties": {
         "name": {
           "type": "string"
@@ -1869,7 +2129,14 @@
         },
         "type": {
           "type": "string",
-          "enum": ["patch", "sbom", "report", "script", "config", "documentation"]
+          "enum": [
+            "patch",
+            "sbom",
+            "report",
+            "script",
+            "config",
+            "documentation"
+          ]
         },
         "description": {
           "type": "string"
@@ -1881,15 +2148,25 @@
       "title": "Verification Output",
       "description": "Schema for verification_agent output",
       "type": "object",
-      "required": ["verification_results", "metrics", "recommendations"],
+      "required": [
+        "verification_results",
+        "metrics",
+        "recommendations"
+      ],
       "properties": {
         "verification_results": {
           "type": "object",
-          "required": ["overall_status"],
+          "required": [
+            "overall_status"
+          ],
           "properties": {
             "overall_status": {
               "type": "string",
-              "enum": ["passed", "passed_with_warnings", "failed"]
+              "enum": [
+                "passed",
+                "passed_with_warnings",
+                "failed"
+              ]
             },
             "tests": {
               "$ref": "#/$defs/TestResults"
@@ -1949,12 +2226,18 @@
           "minimum": 0
         },
         "coverage_before": {
-          "type": ["number", "null"],
+          "type": [
+            "number",
+            "null"
+          ],
           "minimum": 0,
           "maximum": 100
         },
         "coverage_after": {
-          "type": ["number", "null"],
+          "type": [
+            "number",
+            "null"
+          ],
           "minimum": 0,
           "maximum": 100
         },
@@ -2143,7 +2426,12 @@
     },
     "AuditEntry": {
       "type": "object",
-      "required": ["timestamp", "agent", "action", "result"],
+      "required": [
+        "timestamp",
+        "agent",
+        "action",
+        "result"
+      ],
       "properties": {
         "timestamp": {
           "type": "string",
@@ -2157,7 +2445,12 @@
         },
         "result": {
           "type": "string",
-          "enum": ["success", "warning", "failure", "skipped"]
+          "enum": [
+            "success",
+            "warning",
+            "failure",
+            "skipped"
+          ]
         },
         "duration_ms": {
           "type": "integer",
@@ -2171,7 +2464,9 @@
     },
     "Recommendations": {
       "type": "object",
-      "required": ["ready_for_pr"],
+      "required": [
+        "ready_for_pr"
+      ],
       "properties": {
         "ready_for_pr": {
           "type": "boolean"
