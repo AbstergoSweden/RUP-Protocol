@@ -38,7 +38,9 @@ jobs:
       run: node validate_rup.js protocol rup-protocol-v2.1.yaml
       
     - name: Validate Protocol (Bash)
-      run: ./validate_rup.sh protocol rup-protocol-v2.1.yaml
+      run: |
+        chmod +x ./validate_rup.sh
+        ./validate_rup.sh protocol rup-protocol-v2.1.yaml
       
     - name: Run Tests
       run: |
