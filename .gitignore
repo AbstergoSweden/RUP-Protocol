@@ -1,0 +1,95 @@
+# ---- OS ----
+.DS_Store
+._*
+__MACOSX/
+.AppleDouble
+.LSOverride
+Icon\r
+
+# ---- Editors / IDEs ----
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Native extensions
+*.so
+
+# Packaging / builds
+*.egg-info/
+dist/
+build/
+
+# Test / coverage
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+.pytest_cache/
+.tox/
+.nox/
+.hypothesis/
+
+# Type checking / linting caches
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+__pypackages__/
+
+# ---- Node ----
+node_modules/
+.npm/
+.pnpm-store/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Coverage / test caches
+coverage/
+.nyc_output/
+*.lcov
+
+# Tool caches
+.eslintcache
+*.tsbuildinfo
+.turbo/
+.cache/
+.parcel-cache/
+.vite/
+
+# Yarn Berry (safe default: ignore most, but keep what may be required)
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+# NOTE: do NOT ignore .yarnrc.yml (it’s config)
+
+# ---- Environment files ----
+.env
+.env.*
+!.env.example
+.envrc
+.direnv/
+
+# ---- Repo-specific artifacts ----
+artifacts/
+*.patch
