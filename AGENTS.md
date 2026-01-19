@@ -371,7 +371,7 @@ node validate_rup.js protocol rup-protocol-v2.1.yaml 2>&1 | tee debug.log
 ## License & Maintenance
 
 **License**: CC0-1.0 (Public Domain) - See LICENSE file
-**Maintainer**: Faye Ryan-Häkansdotter
+**Maintainer**: Faye Håkansdotter
 **Version**: 2.1.0 (2026-01-18)
 
 This is a reference implementation designed for AI agent consumption. Modifications should maintain backward compatibility and update all three validators synchronously.

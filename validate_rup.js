@@ -12,7 +12,7 @@
  * Requirements:
  *   npm install ajv ajv-formats js-yaml glob
  *
- * Author: RUP Protocol Team
+ * Author: Faye Håkansdotter
  * License: CC0-1.0
  */
 

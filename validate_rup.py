@@ -12,7 +12,7 @@ Usage:
 Requirements:
     pip install jsonschema pyyaml
 
-Author: RUP Protocol Team
+Author: Faye Håkansdotter
 License: CC0-1.0
 """
 

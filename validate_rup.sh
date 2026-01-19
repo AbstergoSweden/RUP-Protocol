@@ -14,7 +14,7 @@
 #   - ajv-cli: npm install -g ajv-cli ajv-formats
 #   - js-yaml: npm install -g js-yaml
 #
-# Author: RUP Protocol Team
+# Author: Faye Håkansdotter
 # License: CC0-1.0
 #═══════════════════════════════════════════════════════════════════════════════
 

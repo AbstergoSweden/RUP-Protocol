@@ -268,6 +268,6 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ---
 
-**Developed by Faye Ryan-Håkansdotter**
+**Developed by Faye Håkansdotter**
 
 **Built with ❤️ for AI-assisted development**
