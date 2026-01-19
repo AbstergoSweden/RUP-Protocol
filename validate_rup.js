@@ -22,7 +22,7 @@ const path = require('path');
 // Check for required modules
 let Ajv, addFormats, yaml, glob;
 try {
-    Ajv = require('ajv');
+    Ajv = require('ajv/dist/2020');
     addFormats = require('ajv-formats');
     yaml = require('js-yaml');
     glob = require('glob');
@@ -71,11 +71,11 @@ function loadSchema(schemaPath) {
     if (!schemaPath) {
         schemaPath = path.join(__dirname, 'rup-schema.json');
     }
-    
+
     if (!fs.existsSync(schemaPath)) {
         throw new Error(`Schema not found: ${schemaPath}`);
     }
-    
+
     return JSON.parse(fs.readFileSync(schemaPath, 'utf8'));
 }
 
@@ -84,7 +84,7 @@ function loadYaml(filePath) {
     if (!fs.existsSync(filePath)) {
         throw new Error(`File not found: ${filePath}`);
     }
-    
+
     return yaml.load(fs.readFileSync(filePath, 'utf8'));
 }
 
@@ -93,7 +93,7 @@ function loadJson(filePath) {
     if (!fs.existsSync(filePath)) {
         throw new Error(`File not found: ${filePath}`);
     }
-    
+
     return JSON.parse(fs.readFileSync(filePath, 'utf8'));
 }
 
@@ -101,23 +101,23 @@ function loadJson(filePath) {
 function formatError(error, indent = 0) {
     const prefix = '  '.repeat(indent);
     const path = error.instancePath || '(root)';
-    
+
     let lines = [
         `${prefix}${colorize('✗', 'red')} ${colorize(path, 'cyan')}`,
         `${prefix}  Message: ${error.message}`
     ];
-    
+
     if (error.keyword) {
         lines.push(`${prefix}  Keyword: ${error.keyword}`);
     }
-    
+
     if (error.params && Object.keys(error.params).length > 0) {
         const params = JSON.stringify(error.params);
         if (params.length < 100) {
             lines.push(`${prefix}  Params: ${params}`);
         }
     }
-    
+
     return lines.join('\n');
 }
 
@@ -129,7 +129,7 @@ function createValidator(schema) {
         validateFormats: true
     });
     addFormats(ajv);
-    
+
     return ajv.compile(schema);
 }
 
@@ -138,25 +138,25 @@ function validateProtocol(protocolPath, schemaPath) {
     try {
         const schema = loadSchema(schemaPath);
         const protocol = loadYaml(protocolPath);
-        
+
         const validate = createValidator(schema);
         const valid = validate(protocol);
-        
+
         if (valid) {
             printSuccess(`Protocol is valid: ${protocolPath}`);
             return { valid: true, errors: [] };
         } else {
             printError(`Protocol validation failed: ${protocolPath}`);
             console.log(`  Found ${validate.errors.length} error(s):`);
-            
+
             validate.errors.slice(0, 10).forEach(error => {
                 console.log(formatError(error, 1));
             });
-            
+
             if (validate.errors.length > 10) {
                 console.log(`  ... and ${validate.errors.length - 10} more errors`);
             }
-            
+
             return { valid: false, errors: validate.errors };
         }
     } catch (e) {
@@ -173,48 +173,48 @@ function validateOutput(outputPath, outputType, schemaPath) {
         'execution': 'ExecutionOutput',
         'verification': 'VerificationOutput'
     };
-    
+
     if (!typeMap[outputType]) {
         printError(`Unknown output type: ${outputType}`);
         console.log(`Valid types: ${Object.keys(typeMap).join(', ')}`);
         return { valid: false, errors: [] };
     }
-    
+
     try {
         const schema = loadSchema(schemaPath);
         const output = loadJson(outputPath);
-        
+
         const defName = typeMap[outputType];
-        
+
         if (!schema.$defs || !schema.$defs[defName]) {
             printError(`Schema definition not found: ${defName}`);
             return { valid: false, errors: [] };
         }
-        
+
         // Create sub-schema with definitions
         const subSchema = {
             ...schema.$defs[defName],
             $defs: schema.$defs
         };
-        
+
         const validate = createValidator(subSchema);
         const valid = validate(output);
-        
+
         if (valid) {
             printSuccess(`Output is valid: ${outputPath}`);
             return { valid: true, errors: [] };
         } else {
             printError(`Output validation failed: ${outputPath}`);
             console.log(`  Found ${validate.errors.length} error(s):`);
-            
+
             validate.errors.slice(0, 10).forEach(error => {
                 console.log(formatError(error, 1));
             });
-            
+
             if (validate.errors.length > 10) {
                 console.log(`  ... and ${validate.errors.length - 10} more errors`);
             }
-            
+
             return { valid: false, errors: validate.errors };
         }
     } catch (e) {
@@ -229,19 +229,19 @@ function validateAll(directory, schemaPath) {
         printError(`Directory not found: ${directory}`);
         return { valid: false, results: [] };
     }
-    
+
     console.log(colorize('Validation Results', 'bold'));
     console.log('═'.repeat(50));
-    
+
     const results = [];
-    
+
     // Find protocol files
     const protocolFiles = glob.sync(`${directory}/**/*protocol*.{yaml,yml}`, { nodir: true });
     protocolFiles.forEach(file => {
         const result = validateProtocol(file, schemaPath);
         results.push({ file, ...result });
     });
-    
+
     // Find output files
     const outputPatterns = [
         { type: 'discovery', pattern: '**/discovery*.json' },
@@ -251,7 +251,7 @@ function validateAll(directory, schemaPath) {
         { type: 'verification', pattern: '**/verification*.json' },
         { type: 'verification', pattern: '**/report*.json' }
     ];
-    
+
     outputPatterns.forEach(({ type, pattern }) => {
         const files = glob.sync(`${directory}/${pattern}`, { nodir: true });
         files.forEach(file => {
@@ -259,18 +259,18 @@ function validateAll(directory, schemaPath) {
             results.push({ file, type, ...result });
         });
     });
-    
+
     console.log('═'.repeat(50));
-    
+
     const validCount = results.filter(r => r.valid).length;
     const invalidCount = results.filter(r => !r.valid).length;
-    
+
     console.log(`Total: ${results.length} files`);
     printSuccess(`Valid: ${validCount}`);
     if (invalidCount > 0) {
         printError(`Invalid: ${invalidCount}`);
     }
-    
+
     return {
         valid: invalidCount === 0,
         results
@@ -355,12 +355,12 @@ function generateSample(outputType, outputPath) {
             }
         }
     };
-    
+
     if (!samples[outputType]) {
         printError(`Unknown output type: ${outputType}`);
         return false;
     }
-    
+
     const filePath = outputPath || `sample_${outputType}.json`;
     fs.writeFileSync(filePath, JSON.stringify(samples[outputType], null, 2));
     printSuccess(`Created sample ${outputType} output: ${filePath}`);
@@ -401,7 +401,7 @@ function main() {
     const args = process.argv.slice(2);
     const command = args[0] || 'help';
     const schemaPath = process.env.RUP_SCHEMA_PATH || null;
-    
+
     switch (command) {
         case 'protocol':
             if (!args[1]) {
@@ -412,7 +412,7 @@ function main() {
             const protocolResult = validateProtocol(args[1], schemaPath);
             process.exit(protocolResult.valid ? 0 : 1);
             break;
-            
+
         case 'output':
             if (!args[1] || !args[2]) {
                 printError('Missing arguments');
@@ -422,7 +422,7 @@ function main() {
             const outputResult = validateOutput(args[1], args[2], schemaPath);
             process.exit(outputResult.valid ? 0 : 1);
             break;
-            
+
         case 'all':
             if (!args[1]) {
                 printError('Missing directory argument');
@@ -432,7 +432,7 @@ function main() {
             const allResult = validateAll(args[1], schemaPath);
             process.exit(allResult.valid ? 0 : 1);
             break;
-            
+
         case 'sample':
             if (!args[1]) {
                 printError('Missing output type argument');
@@ -442,14 +442,14 @@ function main() {
             const sampleResult = generateSample(args[1], args[2]);
             process.exit(sampleResult ? 0 : 1);
             break;
-            
+
         case 'help':
         case '--help':
         case '-h':
             printUsage();
             process.exit(0);
             break;
-            
+
         default:
             printError(`Unknown command: ${command}`);
             printUsage();

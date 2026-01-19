@@ -21,7 +21,6 @@ protocol_version: "2.1.0"
 last_updated: "2026-01-18"
 license: "CC0-1.0"
 maintainer: "Faye Ryan-Häkansdotter"
-author: "Faye Ryan-Häkansdotter"
 
 #═══════════════════════════════════════════════════════════════════════════════
 # METADATA & CHANGELOG
@@ -2344,15 +2343,8 @@ monorepo:
       - "Test affected packages only"
     
     ci_optimization:
-      path_filtering: |
-        on:
-          push:
-            paths:
-              - 'packages/{package}/**'
-      
-      affected_only: |
-        - name: Get affected
-          run: npx nx affected:test --base=origin/main
+      - "Use path-based CI filtering to only run workflows for changed packages"
+      - "Use 'affected' graph analysis to run tests only for impacted projects"
   
   package_schema:
     type: "object"

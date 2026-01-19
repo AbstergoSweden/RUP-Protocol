@@ -1,0 +1,14 @@
+# Default owners
+* @FayeRyan
+
+# Protocol definitions
+*.yaml @FayeRyan
+*.json @FayeRyan
+
+# Validation scripts
+*.py @FayeRyan
+*.js @FayeRyan
+*.sh @FayeRyan
+
+# Documentation
+*.md @FayeRyan
