@@ -85,7 +85,7 @@ RUP-Protocol-v2.1/
 ### Priority Levels
 
 | Priority | Description | Time Allocation |
-|----------|-------------|-----------------|
+| ---------- | ----------- | --------------- |
 | **P0** | Correctness + CI green + Security | 60-70% |
 | **P1** | Documentation + Developer Experience | 20-30% |
 | **P2** | Structural improvements + Advanced CI | 5-10% |
@@ -106,7 +106,7 @@ discovery.json       plan.json         changes.patch        report.json
 ### Supported Languages
 
 | Language | Package Manager | Test Framework | Linter |
-|----------|-----------------|----------------|--------|
+| ---------- | --------------- | -------------- | ------ |
 | Python | pip, poetry | pytest | ruff, black |
 | Node.js | npm, yarn | jest, mocha | eslint, prettier |
 | Go | go mod | go test | gofmt, golangci-lint |
@@ -124,7 +124,7 @@ discovery.json       plan.json         changes.patch        report.json
 ### Repo Size Scaling
 
 | Size | Files | LOC | What to Include |
-|------|-------|-----|-----------------|
+| ------ | ----- | --- | --------------- |
 | Tiny | < 10 | < 1K | README, LICENSE, basic CI |
 | Small | 10-100 | 1K-10K | + CONTRIBUTING, SECURITY, pre-commit |
 | Medium | 100-1K | 10K-100K | + CODEOWNERS, templates, branch protection |

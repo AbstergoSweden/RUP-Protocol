@@ -8,7 +8,7 @@
 
 ---
 
-# Table of Contents
+## Table of Contents
 
 1. [Phase 0: Target Repository Setup](#phase-0-target-repository-setup)
 2. [Phase 1: Discovery](#phase-1-discovery)
@@ -42,7 +42,7 @@ environment: production
 ## Initial State Assessment
 
 | Characteristic | Value | Notes |
-|---------------|-------|-------|
+| -------------- | ----- | ----- |
 | LOC | 8,234 | Measured with `cloc` |
 | File Count | 72 | Excluding node_modules |
 | Test Files | 3 | Very sparse coverage |
@@ -136,7 +136,7 @@ inventory-api/
 ### Step 1.3: Gap Analysis
 
 | ID | Category | Severity | Title | Impact |
-|----|----------|----------|-------|--------|
+| -- | -------- | -------- | ----- | ------ |
 | GAP-001 | tests | critical | 22% test coverage | High regression risk |
 | GAP-002 | security | critical | No dependency scanning | Vulnerable packages undetected |
 | GAP-003 | lint | high | No linter configured | Code quality inconsistent |
@@ -325,7 +325,7 @@ inventory-api/
 Using MoSCoW + Risk-Adjusted Scoring:
 
 | Gap ID | Base Priority | Risk Multiplier | Final Score | Selected |
-|--------|--------------|-----------------|-------------|----------|
+| ------ | ------------- | --------------- | ----------- | -------- |
 | GAP-002 | P0 (security) | 1.5x (critical) | 15 | ✅ |
 | GAP-004 | P0 (security) | 1.3x (high) | 13 | ✅ |
 | GAP-006 | P1 (ci) | 1.2x (medium) | 9.6 | ✅ |
@@ -981,7 +981,7 @@ Successfully compiled 30 TypeScript files to dist/
 ### Summary
 
 | Metric | Before | After | Delta |
-|--------|--------|-------|-------|
+| ------ | ------ | ----- | ----- |
 | Security scanning | ❌ None | ✅ npm audit + gitleaks | +2 tools |
 | Linting | ❌ None | ✅ ESLint configured | +1 tool |
 | CI test stage | ❌ Build only | ✅ Test + Build | +1 stage |
@@ -992,7 +992,7 @@ Successfully compiled 30 TypeScript files to dist/
 ### Gaps Addressed
 
 | Gap ID | Status | Notes |
-|--------|--------|-------|
+| ------ | ------ | ----- |
 | GAP-002 | ✅ Closed | npm audit added to CI |
 | GAP-004 | ✅ Closed | gitleaks pre-commit configured |
 | GAP-003 | ✅ Closed | ESLint with TypeScript support |
@@ -1078,7 +1078,7 @@ Error: .github/workflows/build.yml: unexpected value 'needs'
 ## Performance Notes
 
 | Phase | Expected | Actual | Notes |
-|-------|----------|--------|-------|
+| ----- | -------- | ------ | ----- |
 | Discovery | 5-10s | 4.8s | ✅ Within range |
 | Planning | 1-3s | 1.1s | ✅ Fast |
 | Execution | 30-60s | 38.2s | ✅ Within range |
