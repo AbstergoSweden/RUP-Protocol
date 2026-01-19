@@ -75,7 +75,9 @@ RUP-Protocol-v2.1/
     ├── discovery_output.json
     ├── plan_output.json
     ├── execution_output.json
-    └── verification_output.json
+    ├── verification_output.json
+    ├── rup_mock_walkthrough.md   # Detailed end-to-end example
+    └── mock_scenario_summary.json
 ```
 
 ## Protocol Highlights

@@ -288,43 +288,20 @@ EOF
 main() {
     local command="${1:-help}"
     
-    case "$command" in
-        protocol)
-            if [ -z "$2" ]; then
-                print_error "Missing protocol file argument"
-                print_usage
-                exit 1
-            fi
-            check_dependencies
-            validate_protocol "$2"
-            ;;
-        output)
-            if [ -z "$2" ] || [ -z "$3" ]; then
-                print_error "Missing arguments"
-                print_usage
-                exit 1
-            fi
-            check_dependencies
-            validate_output "$2" "$3"
-            ;;
-        all)
-            if [ -z "$2" ]; then
-                print_error "Missing directory argument"
-                print_usage
-                exit 1
-            fi
-            check_dependencies
-            validate_all "$2"
-            ;;
-        help|--help|-h)
-            print_usage
-            ;;
-        *)
-            print_error "Unknown command: $command"
-            print_usage
-            exit 1
-            ;;
-    esac
+    # Check if validate_rup.js exists
+    if [ ! -f "$SCRIPT_DIR/validate_rup.js" ]; then
+        print_error "validate_rup.js not found in $SCRIPT_DIR"
+        exit 1
+    fi
+
+    # Verify Node.js is available
+    if ! command -v node &> /dev/null; then
+        print_error "Node.js is required but not found"
+        exit 1
+    fi
+
+    # Delegate to validate_rup.js
+    node "$SCRIPT_DIR/validate_rup.js" "$@"
 }
 
 main "$@"
