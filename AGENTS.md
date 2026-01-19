@@ -10,6 +10,7 @@
 4. **Verification** - Validate changes, generate reports, prepare PRs
 
 ### Key Capabilities
+
 - **14 Language Support**: Python, Node.js, Go, Rust, Java, Ruby, PHP, C#, Swift, Kotlin, Scala, Elixir, C/C++
 - **Multi-Platform CI**: GitHub Actions, GitLab CI, CircleCI, Azure DevOps
 - **Comprehensive Governance**: CODEOWNERS, branch protection, issue/PR templates, ADRs
@@ -19,16 +20,19 @@
 ## Technology Stack
 
 ### Core Technologies
+
 - **Schema Definition**: JSON Schema Draft 2020-12 (`rup-schema.json`)
 - **Protocol Definition**: YAML with anchors and special types (`rup-protocol-v2.1.yaml`)
 - **Validation Framework**: Multi-language implementation (Python, Node.js, Bash)
 
 ### Python Environment
+
 - **Dependencies**: `jsonschema>=4.21.0`, `PyYAML>=6.0.1`
 - **Primary Validator**: `validate_rup.py` (recommended)
 - **Python Version**: 3.11+ (from CI configuration)
 
 ### Node.js Environment
+
 - **Dependencies**: `ajv@^8.17.1`, `ajv-formats@^3.0.1`, `js-yaml@^4.1.0`, `glob@^10.4.5`
 - **Parallel Validator**: `validate_rup.js`
 - **Package Manager**: npm
@@ -36,7 +40,8 @@
 ## Code Organization
 
 ### Root Directory Structure
-```
+
+```text
 RUP-Protocol/
 ├── rup-protocol-v2.1.yaml    # Main protocol definition (AI agent reference)
 ├── rup-schema.json           # JSON Schema (single source of truth)
@@ -58,7 +63,9 @@ RUP-Protocol/
 ```
 
 ### Examples Directory
+
 The `examples/` directory contains synthetic but schema-compliant sample outputs for each agent type:
+
 - **discovery_output.json**: Repository analysis, tooling detection, risk assessment
 - **plan_output.json**: Prioritized backlog, selected items, time estimates
 - **execution_output.json**: File changes, commit proposals, verification results
@@ -69,6 +76,7 @@ The `examples/` directory contains synthetic but schema-compliant sample outputs
 ## Build & Test Commands
 
 ### Python Validator (Recommended)
+
 ```bash
 # Setup environment
 python3 -m venv .venv
@@ -92,6 +100,7 @@ python validate_rup.py protocol rup-protocol-v2.1.yaml --verbose
 ```
 
 ### Node.js Validator
+
 ```bash
 # Install dependencies
 npm install
@@ -109,6 +118,7 @@ npm run sample:discovery
 ```
 
 ### Bash Wrapper
+
 ```bash
 # Make executable
 chmod +x validate_rup.sh
@@ -123,6 +133,7 @@ chmod +x validate_rup.sh
 ## Architecture Details
 
 ### Schema-First Design Pattern
+
 The project follows a **schema-first development** approach where `rup-schema.json` is the single source of truth:
 
 1. **Schema Defines Structure**: All protocol definitions and agent outputs must conform to the JSON Schema
@@ -131,21 +142,23 @@ The project follows a **schema-first development** approach where `rup-schema.js
 4. **Format Validation**: Enforces ISO 8601 dates, semantic versions, email formats
 
 ### Validator Implementation Pattern
+
 Both Python and Node.js validators follow identical CLI interfaces:
 
-```
+```text
 validate_rup.py|js [command] [file/directory] [type]
 
 Commands:
   protocol <file>              - Validate protocol YAML against schema
   output <file> <type>         - Validate agent output JSON
   all <directory>              - Validate all files in directory
+```
 
 Types (for output command):
   discovery, plan, execution, verification
-```
 
 ### Key Schema Definitions
+
 Located in `rup-schema.json` under `$defs`:
 
 - **DiscoveryReport**: Repository metadata, detected tooling, gap analysis, risk scores
@@ -154,6 +167,7 @@ Located in `rup-schema.json` under `$defs`:
 - **VerificationOutput**: Test metrics, security scan results, PR recommendations
 
 **Priority Levels**:
+
 - **P0**: Correctness + CI green + Security (60-70% time)
 - **P1**: Documentation + Developer Experience (20-30% time)
 - **P2**: Structural improvements + Advanced CI (5-10% time)
@@ -162,6 +176,7 @@ Located in `rup-schema.json` under `$defs`:
 ## Code Style Guidelines
 
 ### Python (`validate_rup.py`)
+
 - **Type Hints**: All functions use explicit type annotations (`Dict[str, Any]`, `List[Optional[...]]`)
 - **Error Handling**: Try/except for import errors with helpful messages
 - **CLI Design**: `argparse` with subcommands, colorized output
@@ -169,6 +184,7 @@ Located in `rup-schema.json` under `$defs`:
 - **Colors**: ANSI color class with terminal detection (`sys.stdout.isatty()`)
 
 ### Node.js (`validate_rup.js`)
+
 - **CommonJS Modules**: `require()` syntax, no ES modules
 - **Error Handling**: Try/catch for module imports, process.exit(1) on failure
 - **CLI Design**: Manual argv parsing (no external CLI library)
@@ -176,6 +192,7 @@ Located in `rup-schema.json` under `$defs`:
 - **Colors**: Similar ANSI color patterns as Python version
 
 ### JSON Schema (`rup-schema.json`)
+
 - **Draft 2020-12**: Uses latest JSON Schema standard
 - **Strict Validation**: `additionalProperties: false` on all objects
 - **Semantic Versioning**: Pattern `^\d+\.\d+\.\d+$` for version strings
@@ -185,6 +202,7 @@ Located in `rup-schema.json` under `$defs`:
 ## Testing Strategy
 
 ### Schema Validation Testing
+
 The primary testing mechanism is **self-validation**:
 
 1. **Protocol Validation**: Ensure `rup-protocol-v2.1.yaml` conforms to schema
@@ -192,6 +210,7 @@ The primary testing mechanism is **self-validation**:
 3. **Cross-Validator Consistency**: Python and Node.js validators produce identical results
 
 ### Running Validation Tests
+
 ```bash
 # Full validation suite (Python)
 python validate_rup.py protocol rup-protocol-v2.1.yaml && \
@@ -208,7 +227,9 @@ echo "✅ All validation tests passed"
 ```
 
 ### Adding New Examples
+
 When adding new schema `$defs`:
+
 1. Create example JSON file in `examples/` directory
 2. Update `INSTALL.md` with validation command
 3. Add to test suite in both Python and Node.js
@@ -217,6 +238,7 @@ When adding new schema `$defs`:
 ## Deployment & CI/CD
 
 ### GitHub Actions Integration
+
 ```yaml
 name: Validate RUP Protocol
 on: [push, pull_request]
@@ -233,11 +255,14 @@ jobs:
 ```
 
 ### Validation in Production
+
 **Exit Codes**:
+
 - `0` - Validation successful
 - `1` - Validation failed (invalid schema, file not found, etc.)
 
 **Error Handling**:
+
 - Fail-safe approach with detailed error messages
 - Maximum 10 errors displayed by default (--verbose for all)
 - Error stack traces include JSON path and validation context
@@ -245,17 +270,20 @@ jobs:
 ## Security Considerations
 
 ### Safe by Design
+
 - **No Code Execution**: Validators only parse YAML/JSON, no code execution
 - **Schema Validation**: Prevents malicious data through strict schema enforcement
 - **Path Safety**: Uses `pathlib` and path joining to prevent directory traversal
 - **No Network Calls**: Validators work offline, no external dependencies
 
 ### Secrets Handling
+
 - Never add secrets to example files
 - Example outputs use synthetic data only
 - Schema does not define secret fields
 
 ### Input Validation
+
 - File existence checks before parsing
 - UTF-8 encoding enforced
 - JSON Schema Draft 2020-12 validator (battle-tested)
@@ -263,6 +291,7 @@ jobs:
 ## Development Workflow
 
 ### Making Schema Changes
+
 1. **Edit Schema**: Modify `rup-schema.json` (add new $defs, properties, etc.)
 2. **Update Validators**: Ensure Python and Node.js validators handle changes
 3. **Add Examples**: Create sample outputs for new schema definitions
@@ -270,6 +299,7 @@ jobs:
 5. **Update Documentation**: Reflect changes in AGENTS.md and README.md
 
 ### Protocol Updates
+
 1. **Edit Protocol**: Modify `rup-protocol-v2.1.yaml`
 2. **Bump Version**: Update `protocol_version` and `last_updated`
 3. **Add Changelog**: Document changes in `metadata.changelog`
@@ -277,12 +307,15 @@ jobs:
 5. **Test Examples**: All examples must still validate
 
 ### Validator Modifications
+
 **Python Validator**:
+
 - Update `type_map` dictionary when adding new output types
 - Modify error formatting functions for better context
 - Enhance RefResolver configuration for complex schemas
 
 **Node.js Validator**:
+
 - Update `typeMap` object to match Python version
 - Sync glob patterns with Python validator behavior
 - Maintain identical exit codes and error messages
@@ -292,26 +325,33 @@ jobs:
 ### Common Validation Errors
 
 **Schema Validation Failure**:
-```
+
+```text
 ❌ Validation failed: 2 errors
 ❌ phases[0].name: 'discover' is not one of ['discovery', 'planning', 'execution', 'verification']
 ❌ priorities.p0.description: 'Too short' is too short (minimum 20 characters)
 ```
+
 **Fix**: Check enum values and string length constraints in schema
 
 **Ref Resolution Error**:
-```
+
+```text
 ❌ Unresolvable JSON pointer: '$defs/NonExistentType'
 ```
+
 **Fix**: Ensure $ref points to valid $def in schema
 
 **YAML Parsing Error**:
-```
+
+```text
 Error: Invalid YAML syntax: mapping values are not allowed here
 ```
+
 **Fix**: Validate YAML syntax using online validator or Python yaml module
 
 ### Debug Mode
+
 ```bash
 # Python verbose mode
 python validate_rup.py protocol rup-protocol-v2.1.yaml --verbose

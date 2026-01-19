@@ -7,6 +7,7 @@ This file provides guidance to WARP (warp.dev) when working with code in this re
 RUP-Protocol is a production-grade repository automation framework for AI agents. It defines a 4-phase pipeline (Discovery → Planning → Execution → Verification) with JSON Schema validation for protocol definitions and agent outputs across 14 supported languages.
 
 The repo contains:
+
 - **rup-protocol-v2.1.yaml**: Main protocol definition (production reference)
 - **rup-schema.json**: JSON Schema (Draft 2020-12) for validating protocol and agent outputs
 - **Validators**: Python, Node.js, and Bash implementations
@@ -17,6 +18,7 @@ The repo contains:
 ### Common Commands
 
 **Python Validation** (recommended)
+
 ```bash
 # Setup environment
 python3 -m venv .venv && source .venv/bin/activate
@@ -35,14 +37,16 @@ python validate_rup.py output examples/verification_output.json verification
 python validate_rup.py all ./examples
 ```
 
-**Node.js Validation**
+### Node.js Validation
+
 ```bash
 npm install
 npm run validate:protocol
 npm run validate:examples
 ```
 
-**Bash Wrapper**
+### Bash Wrapper
+
 ```bash
 chmod +x validate_rup.sh
 ./validate_rup.sh protocol rup-protocol-v2.1.yaml
@@ -88,7 +92,7 @@ The codebase implements a **multi-language schema validation framework**:
 
 ### Data Flow
 
-```
+```text
 rup-protocol-v2.1.yaml → Load YAML → Validate against schema → Report errors with context
 examples/*.json → Load JSON → Map type → Extract $def → Validate → Report with path
 ```
@@ -121,7 +125,7 @@ examples/*.json → Load JSON → Map type → Extract $def → Validate → Rep
 
 ## File Structure Reference
 
-```
+```text
 RUP-Protocol/
 ├── rup-protocol-v2.1.yaml    # Protocol definition (read by agents, validated by schema)
 ├── rup-schema.json           # Single source of truth for validation
@@ -144,12 +148,14 @@ RUP-Protocol/
 ## Schema $defs Reference
 
 Key output types defined in schema (validators extract these):
+
 - **DiscoveryReport**: Repo metadata, detected tooling, gaps, risk scores
 - **PlanOutput**: Prioritized backlog (P0-P3), selected items for run
 - **ExecutionOutput**: File changes, proposed commits, local verification results
 - **VerificationOutput**: Verification results, metrics deltas, audit trail, PR recommendations
 
 When adding new output types:
+
 1. Add $def in rup-schema.json
 2. Update type_map in validators (Python: line 114-118, Node: line 170-175)
 3. Add example file in examples/ directory
@@ -158,10 +164,12 @@ When adding new output types:
 ## Dependencies
 
 **Python** (requirements.txt):
+
 - jsonschema >=4.21.0 — JSON Schema validation
 - PyYAML >=6.0.1 — YAML parsing
 
 **Node** (package.json):
+
 - ajv ^8.17.1 — JSON Schema validator
 - ajv-formats ^3.0.1 — Custom format validators (date, email, etc.)
 - js-yaml ^4.1.0 — YAML parsing
