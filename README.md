@@ -63,7 +63,7 @@ python validate_rup.py all ./my-project
 
 ## File Structure
 
-```
+```text
 RUP-Protocol-v2.1/
 ├── README.md                 # This file
 ├── rup-protocol-v2.1.yaml    # Main protocol definition
@@ -93,7 +93,7 @@ RUP-Protocol-v2.1/
 
 ### Agent Architecture
 
-```
+```text
 ┌─────────────┐     ┌─────────────┐     ┌─────────────┐     ┌──────────────┐
 │  DISCOVERY  │ ──▶ │  PLANNING   │ ──▶ │  EXECUTION  │ ──▶ │ VERIFICATION │
 │    Agent    │     │    Agent    │     │    Agent    │     │    Agent     │
@@ -150,7 +150,7 @@ discovery.json       plan.json         changes.patch        report.json
 
 Follows [Conventional Commits](https://www.conventionalcommits.org/):
 
-```
+```text
 <type>(<scope>): <subject>
 
 [body]
@@ -270,6 +270,8 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ---
 
-**Developed by Faye Håkansdotter**
+### Credits
 
-**Built with ❤️ for AI-assisted development**
+Developed by **Faye Håkansdotter**
+
+Built with ❤️ for AI-assisted development
