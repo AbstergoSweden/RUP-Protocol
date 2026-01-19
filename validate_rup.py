@@ -219,6 +219,7 @@ def cmd_validate_all(args: argparse.Namespace) -> int:
         return 1
     
     results = []
+    parse_errors = 0  # Track files that failed to parse
     
     # Find and validate protocol files
     for yaml_file in directory.glob("**/*.yaml"):
@@ -229,6 +230,7 @@ def cmd_validate_all(args: argparse.Namespace) -> int:
                 results.append((yaml_file, valid, errors))
             except Exception as e:
                 print(f"{colorize('Warning:', Colors.YELLOW)} Could not validate {yaml_file}: {e}")
+                parse_errors += 1
     
     for yml_file in directory.glob("**/*.yml"):
         if "protocol" in yml_file.name.lower():
@@ -238,6 +240,7 @@ def cmd_validate_all(args: argparse.Namespace) -> int:
                 results.append((yml_file, valid, errors))
             except Exception as e:
                 print(f"{colorize('Warning:', Colors.YELLOW)} Could not validate {yml_file}: {e}")
+                parse_errors += 1
     
     # Find and validate output files
     output_patterns = [
@@ -257,10 +260,14 @@ def cmd_validate_all(args: argparse.Namespace) -> int:
                 results.append((json_file, valid, errors))
             except Exception as e:
                 print(f"{colorize('Warning:', Colors.YELLOW)} Could not validate {json_file}: {e}")
+                parse_errors += 1
     
     # Print results
     if not results:
         print(f"{colorize('Warning:', Colors.YELLOW)} No files found to validate in {directory}")
+        if parse_errors > 0:
+            print(f"  {colorize('⚠', Colors.YELLOW)} Parse errors: {parse_errors}")
+            return 1
         return 0
     
     print(f"\n{colorize('Validation Results', Colors.BOLD)}")
@@ -280,8 +287,10 @@ def cmd_validate_all(args: argparse.Namespace) -> int:
     print(f"Total: {total_valid + total_invalid} files")
     print(f"  {colorize('✓', Colors.GREEN)} Valid: {total_valid}")
     print(f"  {colorize('✗', Colors.RED)} Invalid: {total_invalid}")
+    if parse_errors > 0:
+        print(f"  {colorize('⚠', Colors.YELLOW)} Parse errors: {parse_errors}")
     
-    return 0 if total_invalid == 0 else 1
+    return 0 if (total_invalid == 0 and parse_errors == 0) else 1
 
 
 def create_sample_output(output_type: str) -> Dict[str, Any]:

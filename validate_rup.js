@@ -43,6 +43,12 @@ const colors = {
     reset: '\x1b[0m'
 };
 
+/**
+ * Add ANSI color codes to text if the terminal supports it.
+ * @param {string} text - The text to colorize.
+ * @param {string} color - The color key from the colors object.
+ * @returns {string} Colorized text or the original text if not a TTY.
+ */
 function colorize(text, color) {
     if (process.stdout.isTTY) {
         return `${colors[color]}${text}${colors.reset}`;
@@ -67,6 +73,12 @@ function printInfo(message) {
 }
 
 // Load schema
+/**
+ * Load the RUP JSON Schema from the specified path or default location.
+ * @param {string|null} schemaPath - Path to the schema file, or null for default.
+ * @returns {Object} Parsed JSON schema object.
+ * @throws {Error} If the schema file is not found.
+ */
 function loadSchema(schemaPath) {
     if (!schemaPath) {
         schemaPath = path.join(__dirname, 'rup-schema.json');
@@ -80,6 +92,12 @@ function loadSchema(schemaPath) {
 }
 
 // Load YAML file
+/**
+ * Load and parse a YAML file.
+ * @param {string} filePath - Path to the YAML file.
+ * @returns {Object} Parsed YAML content.
+ * @throws {Error} If the file is not found.
+ */
 function loadYaml(filePath) {
     if (!fs.existsSync(filePath)) {
         throw new Error(`File not found: ${filePath}`);
@@ -89,6 +107,12 @@ function loadYaml(filePath) {
 }
 
 // Load JSON file
+/**
+ * Load and parse a JSON file.
+ * @param {string} filePath - Path to the JSON file.
+ * @returns {Object} Parsed JSON content.
+ * @throws {Error} If the file is not found.
+ */
 function loadJson(filePath) {
     if (!fs.existsSync(filePath)) {
         throw new Error(`File not found: ${filePath}`);
@@ -98,6 +122,12 @@ function loadJson(filePath) {
 }
 
 // Format validation error
+/**
+ * Format a validation error for terminal display.
+ * @param {Object} error - AJV validation error object.
+ * @param {number} [indent=0] - Indentation level.
+ * @returns {string} Formatted error string.
+ */
 function formatError(error, indent = 0) {
     const prefix = '  '.repeat(indent);
     const path = error.instancePath || '(root)';
@@ -122,6 +152,11 @@ function formatError(error, indent = 0) {
 }
 
 // Create AJV validator
+/**
+ * Create an AJV validator instance configured for the RUP schema.
+ * @param {Object} schema - JSON Schema object.
+ * @returns {Function} Compiled AJV validate function.
+ */
 function createValidator(schema) {
     const ajv = new Ajv({
         allErrors: true,
@@ -134,6 +169,12 @@ function createValidator(schema) {
 }
 
 // Validate protocol
+/**
+ * Validate a RUP protocol YAML file against the schema.
+ * @param {string} protocolPath - Path to the protocol YAML file.
+ * @param {string|null} schemaPath - Path to the schema file, or null for default.
+ * @returns {{valid: boolean, errors: Array}} Validation result object.
+ */
 function validateProtocol(protocolPath, schemaPath) {
     try {
         const schema = loadSchema(schemaPath);
@@ -166,6 +207,13 @@ function validateProtocol(protocolPath, schemaPath) {
 }
 
 // Validate agent output
+/**
+ * Validate an agent output JSON file against the appropriate sub-schema.
+ * @param {string} outputPath - Path to the output JSON file.
+ * @param {string} outputType - Type of output (discovery|plan|execution|verification).
+ * @param {string|null} schemaPath - Path to the schema file, or null for default.
+ * @returns {{valid: boolean, errors: Array}} Validation result object.
+ */
 function validateOutput(outputPath, outputType, schemaPath) {
     const typeMap = {
         'discovery': 'DiscoveryReport',
@@ -224,6 +272,12 @@ function validateOutput(outputPath, outputType, schemaPath) {
 }
 
 // Validate all files in directory
+/**
+ * Validate all protocol and output files in a directory.
+ * @param {string} directory - Path to the directory to scan.
+ * @param {string|null} schemaPath - Path to the schema file, or null for default.
+ * @returns {{valid: boolean, results: Array}} Validation results object.
+ */
 function validateAll(directory, schemaPath) {
     if (!fs.existsSync(directory) || !fs.statSync(directory).isDirectory()) {
         printError(`Directory not found: ${directory}`);
@@ -278,6 +332,12 @@ function validateAll(directory, schemaPath) {
 }
 
 // Generate sample output
+/**
+ * Generate a sample output file for a given type.
+ * @param {string} outputType - Type of sample (discovery|plan|execution|verification).
+ * @param {string|null} outputPath - Output file path, or null for default naming.
+ * @returns {boolean} True if sample was created successfully.
+ */
 function generateSample(outputType, outputPath) {
     const samples = {
         discovery: {
