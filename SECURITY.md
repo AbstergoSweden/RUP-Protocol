@@ -12,7 +12,7 @@
 
 **Do NOT report vulnerability via public GitHub issues.**
 
-If you discover a security vulnerability in this project, please report it via email to: `security@example.com` (Replace with actual email if available, currently using placeholder).
+If you discover a security vulnerability in this project, please report it via email to: `2-craze-headmen@icloud.com`.
 
 We will verify the vulnerability and direct you on the next steps.
 
