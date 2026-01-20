@@ -1,0 +1,27 @@
+schema_version: "2.1.0"
+protocol_version: "2.1.0"
+last_updated: "2026-01-18"
+license: "CC0-1.0"
+maintainer: "Faye Håkansdotter"
+
+metadata: !include definitions/metadata.yaml
+
+# Placeholder for rest of content (in a real migration I would extract everything)
+# For now, I'll just put a stub to test the build process
+quick_start: {}
+audience: {}
+assumptions: {}
+agent_architecture: {}
+priorities: {}
+guardrails: {}
+evaluation: {}
+phases: []
+commit_protocol: {}
+change_management: {}
+error_handling: {}
+monorepo: {}
+scaling: {}
+verification_commands: {}
+troubleshooting: {}
+advanced_features: {}
+notes: {}

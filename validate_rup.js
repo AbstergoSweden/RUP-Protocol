@@ -180,14 +180,23 @@ function validateProtocol(protocolPath, schemaPath) {
         const schema = loadSchema(schemaPath);
         const protocol = loadYaml(protocolPath);
 
+        const EXPECTED_VERSION = "2.1.0";
+        if (protocol.schema_version && protocol.schema_version !== EXPECTED_VERSION) {
+             printError(`Protocol validation failed: ${protocolPath}`);
+             console.log(`  Found 1 error(s):`);
+             console.log(`  ${colorize('✗', 'red')} ${colorize('/schema_version', 'cyan')}`);
+             console.log(`    Message: Schema version mismatch. Expected ${EXPECTED_VERSION}, got ${protocol.schema_version}`);
+             return { valid: false, errors: [{ message: "Schema version mismatch" }] };
+        }
+
         const validate = createValidator(schema);
         const valid = validate(protocol);
 
         if (valid) {
-            printSuccess(`Protocol is valid: ${protocolPath}`);
+            console.log(`${colorize('✓', 'green')} ${colorize(protocolPath, 'bold')}: ${colorize('Valid', 'green')}`);
             return { valid: true, errors: [] };
         } else {
-            printError(`Protocol validation failed: ${protocolPath}`);
+            console.log(`${colorize('✗', 'red')} ${colorize(protocolPath, 'bold')}: ${colorize('Invalid', 'red')}`);
             console.log(`  Found ${validate.errors.length} error(s):`);
 
             validate.errors.slice(0, 10).forEach(error => {
@@ -249,10 +258,10 @@ function validateOutput(outputPath, outputType, schemaPath) {
         const valid = validate(output);
 
         if (valid) {
-            printSuccess(`Output is valid: ${outputPath}`);
+            console.log(`${colorize('✓', 'green')} ${colorize(outputPath, 'bold')}: ${colorize('Valid', 'green')}`);
             return { valid: true, errors: [] };
         } else {
-            printError(`Output validation failed: ${outputPath}`);
+            console.log(`${colorize('✗', 'red')} ${colorize(outputPath, 'bold')}: ${colorize('Invalid', 'red')}`);
             console.log(`  Found ${validate.errors.length} error(s):`);
 
             validate.errors.slice(0, 10).forEach(error => {
@@ -459,47 +468,70 @@ ${colorize('Environment Variables:', 'bold')}
 // Main entry point
 function main() {
     const args = process.argv.slice(2);
-    const command = args[0] || 'help';
-    const schemaPath = process.env.RUP_SCHEMA_PATH || null;
+    
+    // Manual argument parsing to support flags
+    const parsedArgs = {
+        command: null,
+        positional: [],
+        schema: process.env.RUP_SCHEMA_PATH || null,
+        verbose: false,
+        type: null
+    };
+
+    for (let i = 0; i < args.length; i++) {
+        const arg = args[i];
+        if (arg === '--schema' || arg === '-s') {
+            parsedArgs.schema = args[++i];
+        } else if (arg === '--verbose' || arg === '-v') {
+            parsedArgs.verbose = true;
+        } else if (!parsedArgs.command) {
+            parsedArgs.command = arg;
+        } else {
+            parsedArgs.positional.push(arg);
+        }
+    }
+
+    const command = parsedArgs.command || 'help';
+    const schemaPath = parsedArgs.schema;
 
     switch (command) {
         case 'protocol':
-            if (!args[1]) {
+            if (parsedArgs.positional.length < 1) {
                 printError('Missing protocol file argument');
                 printUsage();
                 process.exit(1);
             }
-            const protocolResult = validateProtocol(args[1], schemaPath);
+            const protocolResult = validateProtocol(parsedArgs.positional[0], schemaPath);
             process.exit(protocolResult.valid ? 0 : 1);
             break;
 
         case 'output':
-            if (!args[1] || !args[2]) {
+            if (parsedArgs.positional.length < 2) {
                 printError('Missing arguments');
                 printUsage();
                 process.exit(1);
             }
-            const outputResult = validateOutput(args[1], args[2], schemaPath);
+            const outputResult = validateOutput(parsedArgs.positional[0], parsedArgs.positional[1], schemaPath);
             process.exit(outputResult.valid ? 0 : 1);
             break;
 
         case 'all':
-            if (!args[1]) {
+            if (parsedArgs.positional.length < 1) {
                 printError('Missing directory argument');
                 printUsage();
                 process.exit(1);
             }
-            const allResult = validateAll(args[1], schemaPath);
+            const allResult = validateAll(parsedArgs.positional[0], schemaPath);
             process.exit(allResult.valid ? 0 : 1);
             break;
 
         case 'sample':
-            if (!args[1]) {
+            if (parsedArgs.positional.length < 1) {
                 printError('Missing output type argument');
                 printUsage();
                 process.exit(1);
             }
-            const sampleResult = generateSample(args[1], args[2]);
+            const sampleResult = generateSample(parsedArgs.positional[0], parsedArgs.positional[1]);
             process.exit(sampleResult ? 0 : 1);
             break;
 

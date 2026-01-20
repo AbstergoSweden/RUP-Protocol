@@ -17,7 +17,7 @@ describe('RUP Validation', () => {
     it('should validate the protocol file successfully', () => {
         try {
             const output = execSync(`node ${VALIDATOR_SCRIPT} protocol ${PROTOCOL_FILE}`, { encoding: 'utf8' });
-            expect(output).toContain('valid');
+            expect(output.toLowerCase()).toContain('valid');
         } catch (error) {
             console.error(error.stdout);
             throw error;
@@ -29,7 +29,7 @@ describe('RUP Validation', () => {
         if (fs.existsSync(exampleFile)) {
             try {
                 const output = execSync(`node ${VALIDATOR_SCRIPT} output ${exampleFile} discovery`, { encoding: 'utf8' });
-                expect(output).toContain('valid');
+                expect(output.toLowerCase()).toContain('valid');
             } catch (error) {
                 console.error(error.stdout);
                 throw error;

@@ -78,7 +78,11 @@ def load_json(file_path: Path) -> Dict[str, Any]:
 def format_validation_error(error: ValidationError, indent: int = 0) -> str:
     """Format a validation error for display."""
     prefix = "  " * indent
+    # Path in the instance (file being validated)
     path = ".".join(str(p) for p in error.absolute_path) or "(root)"
+    
+    # Path in the schema that triggered the error
+    schema_path = ".".join(str(p) for p in error.schema_path)
     
     lines = [
         f"{prefix}{colorize('✗', Colors.RED)} {colorize(path, Colors.CYAN)}",
@@ -86,7 +90,7 @@ def format_validation_error(error: ValidationError, indent: int = 0) -> str:
     ]
     
     if error.validator:
-        lines.append(f"{prefix}  Validator: {error.validator}")
+        lines.append(f"{prefix}  Validator: {error.validator} (at schema: {schema_path})")
     
     if error.validator_value and len(str(error.validator_value)) < 100:
         lines.append(f"{prefix}  Expected: {error.validator_value}")
@@ -99,6 +103,26 @@ def validate_protocol(
     schema: Dict[str, Any]
 ) -> Tuple[bool, List[ValidationError]]:
     """Validate a protocol definition against the schema."""
+    
+    # Enforce schema version
+    EXPECTED_VERSION = "2.1.0"
+    if 'schema_version' in protocol_data:
+        version = protocol_data['schema_version']
+        if version != EXPECTED_VERSION:
+            # We can treat this as a validation error
+            error = ValidationError(
+                f"Schema version mismatch. Expected {EXPECTED_VERSION}, got {version}",
+                validator="const",
+                validator_value=EXPECTED_VERSION,
+                instance=version,
+                schema_path=["properties", "schema_version"]
+            )
+            # Create validator to check the rest
+            validator = Draft202012Validator(schema)
+            errors = list(validator.iter_errors(protocol_data))
+            errors.insert(0, error)
+            return False, errors
+
     validator = Draft202012Validator(schema)
     errors = list(validator.iter_errors(protocol_data))
     return len(errors) == 0, errors

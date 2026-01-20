@@ -5,6 +5,7 @@
 [![Schema Version](https://img.shields.io/badge/schema-v2.1.0-blue)](./rup-schema.json)
 [![License](https://img.shields.io/badge/license-CC0--1.0-green)](./LICENSE)
 [![Languages](https://img.shields.io/badge/languages-14-orange)](./rup-protocol-v2.1.yaml)
+[![CI](https://github.com/AbstergoSweden/RUP-Protocol/actions/workflows/ci.yml/badge.svg)](https://github.com/AbstergoSweden/RUP-Protocol/actions/workflows/ci.yml)
 
 ## Overview
 
@@ -58,13 +59,13 @@ python validate_rup.py output discovery.json discovery
 python validate_rup.py output plan.json plan
 
 # Validate all files in a directory
-python validate_rup.py all ./my-project
+python validate_rup.py all ./examples
 ```
 
 ## File Structure
 
 ```text
-RUP-Protocol-v2.1/
+RUP-Protocol/
 ├── README.md                 # This file
 ├── rup-protocol-v2.1.yaml    # Main protocol definition
 ├── rup-schema.json           # JSON Schema for validation
@@ -184,6 +185,12 @@ else:
     for error in errors:
         print(f"❌ {error.message}")
 ```
+
+## Continuous Integration
+
+- GitHub Actions CI runs Python (pytest) and Node (jest) suites on pushes and pull requests.
+- CodeQL scans run weekly and on PRs for JavaScript and Python.
+- Supply chain workflows audit npm and pip dependencies weekly and on PRs.
 
 ### Node.js
 
