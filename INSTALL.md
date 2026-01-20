@@ -14,7 +14,7 @@ This folder contains:
 ### 1) Create a venv and install deps
 
 ```bash
-cd /Users/super_user/Desktop/RUP-Protocol-v2.1
+cd ~/path/to/RUP-Protocol
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
@@ -40,7 +40,7 @@ python validate_rup.py output examples/verification_output.json verification
 ### 1) Install deps
 
 ```bash
-cd /Users/super_user/Desktop/RUP-Protocol-v2.1
+cd ~/path/to/RUP-Protocol
 npm install
 ```
 
@@ -54,7 +54,7 @@ node validate_rup.js all examples
 ## Option C: Bash wrapper
 
 ```bash
-cd /Users/super_user/Desktop/RUP-Protocol-v2.1
+cd ~/path/to/RUP-Protocol
 chmod +x validate_rup.sh
 ./validate_rup.sh protocol rup-protocol-v2.1.yaml
 ./validate_rup.sh all examples
