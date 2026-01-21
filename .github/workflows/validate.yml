@@ -2,47 +2,47 @@ name: Validate RUP Protocol
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   validate:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - uses: actions/checkout@v4
-    
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.11'
-        
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20'
-        
-    - name: Install Python dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install jsonschema pyyaml pytest
-        
-    - name: Install Node.js dependencies
-      run: npm install
-      
-    - name: Validate Protocol (Python)
-      run: python validate_rup.py protocol rup-protocol-v2.1.yaml
-      
-    - name: Validate Protocol (Node.js)
-      run: node validate_rup.js protocol rup-protocol-v2.1.yaml
-      
-    - name: Validate Protocol (Bash)
-      run: |
-        chmod +x ./validate_rup.sh
-        ./validate_rup.sh protocol rup-protocol-v2.1.yaml
-      
-    - name: Run Tests
-      run: |
-        pytest
-        npm test
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Install Node.js dependencies
+        run: npm install
+
+      - name: Validate Protocol (Python)
+        run: python validate_rup.py protocol rup-protocol-v2.1.yaml
+
+      - name: Validate Protocol (Node.js)
+        run: node validate_rup.js protocol rup-protocol-v2.1.yaml
+
+      - name: Validate Protocol (Bash)
+        run: |
+          chmod +x ./validate_rup.sh
+          ./validate_rup.sh protocol rup-protocol-v2.1.yaml
+
+      - name: Run Tests
+        run: |
+          pytest
+          npm test
