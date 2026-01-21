@@ -13,8 +13,25 @@ VALIDATE_JS = ROOT_DIR / "validate_rup.js"
 SCHEMA_PATH = ROOT_DIR / "rup-schema.json"
 FIXTURES_DIR = Path(__file__).parent / "fixtures" / "parity"
 
-# Check if node is available
-NODE_AVAILABLE = shutil.which("node") is not None
+# Check if node validator is available and functional
+def _check_node_validator():
+    """Check if Node.js validator is available and functional."""
+    if not shutil.which("node"):
+        return False
+    try:
+        # Try running the validator with --help or a simple test
+        result = subprocess.run(
+            ["node", str(VALIDATE_JS), "--help"],
+            capture_output=True,
+            text=True,
+            timeout=10
+        )
+        # If it returns without error or with recognizable output, it's working
+        return result.returncode == 0 or "Usage" in result.stdout or "Usage" in result.stderr
+    except (subprocess.TimeoutExpired, FileNotFoundError, OSError):
+        return False
+
+NODE_AVAILABLE = _check_node_validator()
 
 def run_python_validator(command, file_path, output_type=None):
     cmd = ["python3", str(VALIDATE_PY), command, str(file_path)]
