@@ -3,6 +3,7 @@ import pytest
 import yaml
 import json
 import os
+import shutil
 from pathlib import Path
 
 # Paths
@@ -11,6 +12,9 @@ VALIDATE_PY = ROOT_DIR / "validate_rup.py"
 VALIDATE_JS = ROOT_DIR / "validate_rup.js"
 SCHEMA_PATH = ROOT_DIR / "rup-schema.json"
 FIXTURES_DIR = Path(__file__).parent / "fixtures" / "parity"
+
+# Check if node is available
+NODE_AVAILABLE = shutil.which("node") is not None
 
 def run_python_validator(command, file_path, output_type=None):
     cmd = ["python3", str(VALIDATE_PY), command, str(file_path)]
@@ -66,6 +70,7 @@ def invalid_discovery_json(tmp_path):
         json.dump(data, f)
     return path
 
+@pytest.mark.skipif(not NODE_AVAILABLE, reason="Node.js not available")
 def test_parity_valid_discovery(valid_discovery_json):
     py_code, py_out, py_err = run_python_validator("output", valid_discovery_json, "discovery")
     node_code, node_out, node_err = run_node_validator("output", valid_discovery_json, "discovery")
@@ -78,6 +83,7 @@ def test_parity_valid_discovery(valid_discovery_json):
     assert "Valid" in py_out
     assert "Valid" in node_out
 
+@pytest.mark.skipif(not NODE_AVAILABLE, reason="Node.js not available")
 def test_parity_invalid_discovery(invalid_discovery_json):
     py_code, py_out, _ = run_python_validator("output", invalid_discovery_json, "discovery")
     node_code, node_out, _ = run_node_validator("output", invalid_discovery_json, "discovery")
@@ -87,6 +93,7 @@ def test_parity_invalid_discovery(invalid_discovery_json):
     assert "Invalid" in py_out
     assert "Invalid" in node_out
 
+@pytest.mark.skipif(not NODE_AVAILABLE, reason="Node.js not available")
 def test_parity_protocol_schema():
     # Use the actual protocol file
     protocol_path = ROOT_DIR / "rup-protocol-v2.1.yaml"
@@ -173,6 +180,7 @@ def edge_case_yaml(tmp_path):
         f.write(protocol_content)
     return proto_path
 
+@pytest.mark.skipif(not NODE_AVAILABLE, reason="Node.js not available")
 def test_parity_yaml_anchors(edge_case_yaml):
     py_code, py_out, _ = run_python_validator("protocol", edge_case_yaml)
     node_code, node_out, _ = run_node_validator("protocol", edge_case_yaml)
@@ -185,6 +193,7 @@ def test_parity_yaml_anchors(edge_case_yaml):
 
 
 
+@pytest.mark.skipif(not NODE_AVAILABLE, reason="Node.js not available")
 def test_parity_schema_version_mismatch(tmp_path):
     protocol_content = """
     schema_version: "1.0.0"
