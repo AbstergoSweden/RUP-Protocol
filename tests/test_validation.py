@@ -37,7 +37,7 @@ def test_validate_all_fails_on_malformed_yaml(tmp_path):
     malformed_file.write_text("this: is: not: valid yaml\n  bad indent")
     
     result = subprocess.run(
-        ["python", "validate_rup.py", "all", str(tmp_path)],
+        ["python3", "validate_rup.py", "all", str(tmp_path)],
         capture_output=True,
         text=True,
         cwd=ROOT_DIR
