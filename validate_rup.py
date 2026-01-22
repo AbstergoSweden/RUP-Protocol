@@ -25,7 +25,7 @@ from typing import Any, Dict, List, Optional, Tuple
 try:
     import yaml
     import jsonschema
-    from jsonschema import Draft202012Validator, ValidationError, RefResolver
+    from jsonschema import Draft202012Validator, ValidationError
 except ImportError as e:
     print(f"Error: Missing required module: {e.name}")
     print("Install with: pip install jsonschema pyyaml")
@@ -150,11 +150,14 @@ def validate_agent_output(
     if '$defs' not in schema or def_name not in schema['$defs']:
         raise ValueError(f"Schema definition not found: {def_name}")
     
-    sub_schema = schema['$defs'][def_name]
+    # Create a wrapper schema that references the definition
+    # This allows the validator to properly resolve $refs
+    wrapper_schema = {
+        "$ref": f"#/$defs/{def_name}",
+        "$defs": schema.get("$defs", {})
+    }
     
-    # Create a resolver for $ref references
-    resolver = RefResolver.from_schema(schema)
-    validator = Draft202012Validator(sub_schema, resolver=resolver)
+    validator = Draft202012Validator(wrapper_schema)
     
     errors = list(validator.iter_errors(output_data))
     return len(errors) == 0, errors
