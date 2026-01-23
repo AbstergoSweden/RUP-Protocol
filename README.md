@@ -17,6 +17,8 @@ RUP (Repository Upgrade Protocol) is a comprehensive framework for AI agents to 
 - **Multi-Platform CI**: GitHub Actions, GitLab CI, CircleCI, Azure DevOps
 - **Comprehensive Governance**: CODEOWNERS, branch protection, issue/PR templates, ADRs
 
+<img width="1024" height="1024" alt="ashley" src="https://github.com/user-attachments/assets/eba28e5c-7fe9-4b01-b75c-d90af88ec18d" />
+
 ## Quick Start
 
 ### 1. For AI Agents
