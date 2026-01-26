@@ -1,0 +1,128 @@
+{
+  "meta": {
+    "agent_id": "agent_discovery",
+    "timestamp": "2026-01-26T17:21:06Z",
+    "duration_ms": 1600,
+    "status": "success"
+  },
+  "repo_metadata": {
+    "name": "RUP-Protocol",
+    "description": "Schema-first protocol + validators for RUP Protocol (self-hosted reference implementation).",
+    "primary_language": "yaml",
+    "repo_type": "library",
+    "loc": 18701,
+    "file_count": 52,
+    "last_commit_date": "2026-01-25T20:49:57-08:00",
+    "contributors": 2,
+    "open_issues": 0,
+    "open_prs": 0,
+    "stars": null,
+    "license": "CC0-1.0"
+  },
+  "languages": [
+    {
+      "name": "yaml",
+      "percentage": 42.2,
+      "package_manager": null,
+      "lockfile_present": false,
+      "version_detected": null
+    },
+    {
+      "name": "json",
+      "percentage": 40.5,
+      "package_manager": null,
+      "lockfile_present": false,
+      "version_detected": null
+    },
+    {
+      "name": "markdown",
+      "percentage": 8.9,
+      "package_manager": null,
+      "lockfile_present": false,
+      "version_detected": null
+    },
+    {
+      "name": "python",
+      "percentage": 4.1,
+      "package_manager": "pip",
+      "lockfile_present": true,
+      "version_detected": null
+    },
+    {
+      "name": "javascript",
+      "percentage": 3.0,
+      "package_manager": "npm",
+      "lockfile_present": true,
+      "version_detected": null
+    },
+    {
+      "name": "other",
+      "percentage": 1.1,
+      "package_manager": null,
+      "lockfile_present": false,
+      "version_detected": null
+    },
+    {
+      "name": "shell",
+      "percentage": 0.3,
+      "package_manager": null,
+      "lockfile_present": false,
+      "version_detected": null
+    }
+  ],
+  "tooling": {
+    "test_framework": "pytest, jest",
+    "test_location": "tests/",
+    "linter": "ruff (python), node --check (js), lint_docs.py (md/yaml)",
+    "formatter": "ruff (python)",
+    "type_checker": null,
+    "build_tool": "pip, npm",
+    "ci_platform": "github_actions",
+    "ci_workflows": [
+      "ci.yml",
+      "codeql.yml",
+      "link-check.yml",
+      "publish.yml",
+      "release-drafter.yml",
+      "supply-chain.yml",
+      "validate.yml"
+    ],
+    "containerization": null,
+    "iac_tool": null
+  },
+  "monorepo": null,
+  "gaps": [
+    {
+      "id": "DX-002",
+      "category": "dx",
+      "severity": "low",
+      "title": "No dedicated formatter for Markdown/YAML",
+      "description": "Linting is enforced, but formatting for Markdown/YAML remains manual.",
+      "impact": "Formatting drift in docs/workflows can occur over time.",
+      "suggested_fix": "Consider adding a formatter (e.g., prettier) or a style guide.",
+      "effort_estimate": "small",
+      "files_affected": [
+        "README.md",
+        "AGENTS.md",
+        ".github/workflows/*.yml"
+      ]
+    }
+  ],
+  "risk_assessment": {
+    "overall_risk": "low",
+    "risk_factors": [
+      {
+        "factor": "Untrusted YAML/JSON inputs could be large or alias-heavy",
+        "severity": "medium",
+        "mitigation": "Validators now enforce file size limits and alias expansion caps."
+      },
+      {
+        "factor": "External link checks require outbound network",
+        "severity": "low",
+        "mitigation": "Scheduled link-check workflow runs in CI; local runs may skip."
+      }
+    ],
+    "technical_debt_score": 14,
+    "production_readiness_score": 92
+  }
+}

@@ -18,18 +18,57 @@ License: CC0-1.0
 
 import argparse
 import json
+import os
 import sys
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
 try:
     import yaml
-    import jsonschema
     from jsonschema import Draft202012Validator, ValidationError
 except ImportError as e:
     print(f"Error: Missing required module: {e.name}")
     print("Install with: pip install jsonschema pyyaml")
     sys.exit(1)
+
+def _env_int(name: str, default: int) -> int:
+    raw = os.getenv(name)
+    if raw is None:
+        return default
+    try:
+        value = int(raw)
+        return value if value > 0 else default
+    except ValueError:
+        return default
+
+
+MAX_FILE_BYTES = _env_int("RUP_MAX_FILE_BYTES", 5 * 1024 * 1024)
+MAX_YAML_ALIASES = _env_int("RUP_MAX_YAML_ALIASES", 50)
+
+
+class LimitedAliasLoader(yaml.SafeLoader):
+    """SafeLoader with alias expansion limits to prevent YAML bombs."""
+
+    def __init__(self, stream):
+        super().__init__(stream)
+        self._alias_count = 0
+
+    def compose_node(self, parent, index):  # type: ignore[override]
+        if self.check_event(yaml.AliasEvent):
+            self._alias_count += 1
+            if self._alias_count > MAX_YAML_ALIASES:
+                raise yaml.YAMLError(
+                    f"YAML aliases exceed limit ({MAX_YAML_ALIASES})."
+                )
+        return super().compose_node(parent, index)
+
+
+def _check_file_size(file_path: Path) -> None:
+    size = file_path.stat().st_size
+    if size > MAX_FILE_BYTES:
+        raise ValueError(
+            f"File too large: {file_path} ({size} bytes > {MAX_FILE_BYTES} bytes)"
+        )
 
 
 # ANSI color codes
@@ -65,12 +104,14 @@ def load_schema(schema_path: Optional[Path] = None) -> Dict[str, Any]:
 
 def load_yaml(file_path: Path) -> Dict[str, Any]:
     """Load a YAML file."""
+    _check_file_size(file_path)
     with open(file_path, 'r', encoding='utf-8') as f:
-        return yaml.safe_load(f)
+        return yaml.load(f, Loader=LimitedAliasLoader)
 
 
 def load_json(file_path: Path) -> Dict[str, Any]:
     """Load a JSON file."""
+    _check_file_size(file_path)
     with open(file_path, 'r', encoding='utf-8') as f:
         return json.load(f)
 

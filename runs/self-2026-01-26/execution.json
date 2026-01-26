@@ -1,0 +1,237 @@
+{
+  "meta": {
+    "agent_id": "agent_execution",
+    "timestamp": "2026-01-26T17:21:06Z",
+    "duration_ms": 2600,
+    "status": "success"
+  },
+  "changes": [
+    {
+      "file_path": "validate_rup.py",
+      "change_type": "modify",
+      "old_path": null,
+      "diff": null,
+      "full_content": null,
+      "rationale": "Add YAML alias/file size limits to Python validator.",
+      "backlog_item_id": "RUP-SEC-001"
+    },
+    {
+      "file_path": "validate_rup.js",
+      "change_type": "modify",
+      "old_path": null,
+      "diff": null,
+      "full_content": null,
+      "rationale": "Add YAML alias/file size limits to Node validator.",
+      "backlog_item_id": "RUP-SEC-001"
+    },
+    {
+      "file_path": "tests/test_security.py",
+      "change_type": "create",
+      "old_path": null,
+      "diff": null,
+      "full_content": null,
+      "rationale": "Add tests to validate alias limits.",
+      "backlog_item_id": "RUP-SEC-001"
+    },
+    {
+      "file_path": "tests/validation.test.js",
+      "change_type": "modify",
+      "old_path": null,
+      "diff": null,
+      "full_content": null,
+      "rationale": "Add JS alias bomb test.",
+      "backlog_item_id": "RUP-SEC-001"
+    },
+    {
+      "file_path": "SECURITY.md",
+      "change_type": "modify",
+      "old_path": null,
+      "diff": null,
+      "full_content": null,
+      "rationale": "Document input hardening and supported versions.",
+      "backlog_item_id": "RUP-SEC-001"
+    },
+    {
+      "file_path": ".github/workflows/link-check.yml",
+      "change_type": "create",
+      "old_path": null,
+      "diff": null,
+      "full_content": null,
+      "rationale": "Add scheduled link-check workflow.",
+      "backlog_item_id": "RUP-SEC-002"
+    },
+    {
+      "file_path": "tools/lint_docs.py",
+      "change_type": "create",
+      "old_path": null,
+      "diff": null,
+      "full_content": null,
+      "rationale": "Add Markdown/YAML linting tool.",
+      "backlog_item_id": "RUP-SEC-003"
+    },
+    {
+      "file_path": ".github/workflows/ci.yml",
+      "change_type": "modify",
+      "old_path": null,
+      "diff": null,
+      "full_content": null,
+      "rationale": "Run lint_docs.py and ruff in CI.",
+      "backlog_item_id": "RUP-SEC-003"
+    },
+    {
+      "file_path": "GEMINI.md",
+      "change_type": "delete",
+      "old_path": "GEMINI.md",
+      "diff": null,
+      "full_content": null,
+      "rationale": "Remove redundant doc to reduce surface area.",
+      "backlog_item_id": "RUP-SEC-004"
+    },
+    {
+      "file_path": "WARP.md",
+      "change_type": "delete",
+      "old_path": "WARP.md",
+      "diff": null,
+      "full_content": null,
+      "rationale": "Remove redundant doc to reduce surface area.",
+      "backlog_item_id": "RUP-SEC-004"
+    },
+    {
+      "file_path": "INSTALL.md",
+      "change_type": "delete",
+      "old_path": "INSTALL.md",
+      "diff": null,
+      "full_content": null,
+      "rationale": "Remove redundant doc to reduce surface area.",
+      "backlog_item_id": "RUP-SEC-004"
+    },
+    {
+      "file_path": "build_rup.py",
+      "change_type": "delete",
+      "old_path": "build_rup.py",
+      "diff": null,
+      "full_content": null,
+      "rationale": "Remove unused experimental builder.",
+      "backlog_item_id": "RUP-SEC-004"
+    },
+    {
+      "file_path": "rup-protocol-src.yaml",
+      "change_type": "delete",
+      "old_path": "rup-protocol-src.yaml",
+      "diff": null,
+      "full_content": null,
+      "rationale": "Remove builder stub input.",
+      "backlog_item_id": "RUP-SEC-004"
+    },
+    {
+      "file_path": "definitions/metadata.yaml",
+      "change_type": "delete",
+      "old_path": "definitions/metadata.yaml",
+      "diff": null,
+      "full_content": null,
+      "rationale": "Remove unused modular metadata file.",
+      "backlog_item_id": "RUP-SEC-004"
+    }
+  ],
+  "commits": [
+    {
+      "hash": null,
+      "message": "security: harden YAML parsing and add alias tests",
+      "files": [
+        "validate_rup.py",
+        "validate_rup.js",
+        "tests/test_security.py",
+        "tests/validation.test.js",
+        "SECURITY.md"
+      ],
+      "type": "security",
+      "scope": "parser",
+      "breaking": false,
+      "backlog_item_ids": [
+        "RUP-SEC-001"
+      ]
+    },
+    {
+      "hash": null,
+      "message": "ci(dx): add link-check workflow and doc linting",
+      "files": [
+        ".github/workflows/link-check.yml",
+        "tools/lint_docs.py",
+        ".github/workflows/ci.yml",
+        "README.md"
+      ],
+      "type": "ci",
+      "scope": "dx",
+      "breaking": false,
+      "backlog_item_ids": [
+        "RUP-SEC-002",
+        "RUP-SEC-003"
+      ]
+    },
+    {
+      "hash": null,
+      "message": "refactor: remove redundant docs and builder artifacts",
+      "files": [
+        "GEMINI.md",
+        "WARP.md",
+        "INSTALL.md",
+        "build_rup.py",
+        "rup-protocol-src.yaml",
+        "definitions/metadata.yaml"
+      ],
+      "type": "refactor",
+      "scope": "cleanup",
+      "breaking": false,
+      "backlog_item_ids": [
+        "RUP-SEC-004"
+      ]
+    }
+  ],
+  "local_verification": {
+    "tests": {
+      "executed": true,
+      "passed": true,
+      "details": "pytest (including security tests) + jest"
+    },
+    "lint": {
+      "executed": true,
+      "passed": true,
+      "details": "ruff check, node --check, lint_docs.py"
+    },
+    "build": {
+      "executed": true,
+      "passed": true,
+      "details": "Protocol/examples validated in Python + Node"
+    },
+    "type_check": {
+      "executed": false,
+      "details": "No type checker configured"
+    }
+  },
+  "artifacts": [
+    {
+      "name": "Self Discovery Report",
+      "path": "runs/self-2026-01-26/discovery.json",
+      "type": "report",
+      "description": "Discovery report for running RUP Protocol against itself"
+    },
+    {
+      "name": "Self Plan Output",
+      "path": "runs/self-2026-01-26/plan.json",
+      "type": "report",
+      "description": "Planning output for self-targeting run"
+    },
+    {
+      "name": "Self Execution Output",
+      "path": "runs/self-2026-01-26/execution.json",
+      "type": "report",
+      "description": "Execution output for self-targeting run"
+    },
+    {
+      "name": "Self Verification Output",
+      "path": "runs/self-2026-01-26/verification.json",
+      "type": "report",
+      "description": "Verification output for self-targeting run"
+    }
+  ]
+}

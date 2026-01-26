@@ -1,8 +1,6 @@
 import subprocess
 import pytest
-import yaml
 import json
-import os
 import shutil
 import sys
 from pathlib import Path

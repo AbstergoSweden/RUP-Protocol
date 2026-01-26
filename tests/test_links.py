@@ -66,4 +66,4 @@ def test_no_broken_links(protocol_urls):
         except requests.RequestException as e:
             broken_links.append(f"{url} (Error: {str(e)})")
             
-    assert not broken_links, f"Found broken links:\n" + "\n".join(broken_links)
+    assert not broken_links, "Found broken links:\n" + "\n".join(broken_links)

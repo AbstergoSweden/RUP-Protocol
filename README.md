@@ -73,10 +73,14 @@ RUP-Protocol/
 ├── README.md                 # This file
 ├── rup-protocol.yaml         # Main protocol definition
 ├── legacy/                   # Pinned legacy protocol snapshots
+├── runs/                     # Self-targeted run outputs (validated JSON)
 ├── rup-schema.json           # JSON Schema for validation
+├── SECURITY.md               # Security policy and reporting
+├── CONTRIBUTING.md           # Contribution guidelines
 ├── validate_rup.py           # Python validation script
 ├── validate_rup.sh           # Bash validation script
 ├── validate_rup.js           # Node.js validation script
+├── tools/                    # Maintenance utilities (e.g., lint_docs.py)
 └── examples/
     ├── discovery_output.json
     ├── plan_output.json
@@ -197,6 +201,33 @@ else:
     for error in errors:
         print(f"❌ {error.message}")
 ```
+
+## Linting
+
+### Python (ruff)
+
+```bash
+ruff check .
+```
+
+### Markdown / YAML
+
+```bash
+./.venv/bin/python tools/lint_docs.py
+```
+
+### JavaScript (syntax check)
+
+```bash
+npm run lint
+```
+
+## Security
+
+- YAML alias expansion is capped to prevent “billion laughs” attacks.
+- Input file size limits are enforced for YAML/JSON.
+- Configure via env vars: `RUP_MAX_YAML_ALIASES` and `RUP_MAX_FILE_BYTES`.
+- See `SECURITY.md` for reporting and policy.
 
 ## Continuous Integration
 

@@ -47,20 +47,22 @@ RUP-Protocol/
 ├── legacy/                   # Pinned legacy protocol snapshots
 │   ├── rup-protocol-v3.0.yaml
 │   └── rup-protocol-v2.1.yaml
+├── runs/                     # Self-targeted run outputs (validated JSON)
 ├── rup-schema.json           # JSON Schema (single source of truth)
+├── SECURITY.md               # Security policy and reporting
+├── CONTRIBUTING.md           # Contribution guidelines
 ├── validate_rup.py           # Python validator (primary implementation)
 ├── validate_rup.js           # Node.js validator (parallel implementation)
 ├── validate_rup.sh           # Bash wrapper (delegates to Node.js)
 ├── package.json              # npm dependencies and scripts
 ├── requirements.txt          # Python dependencies
+├── tools/                    # Maintenance utilities (e.g., lint_docs.py)
 ├── examples/                 # Sample agent output files
 │   ├── discovery_output.json
 │   ├── plan_output.json
 │   ├── execution_output.json
 │   └── verification_output.json
 ├── README.md                 # Human-readable overview
-├── INSTALL.md               # Installation instructions
-├── WARP.md                  # WARP.dev specific guidance
 ├── LICENSE                  # CC0-1.0 (Public Domain)
 └── .gitignore
 ```
@@ -100,6 +102,12 @@ python validate_rup.py all ./examples
 
 # Verbose mode (show all errors)
 python validate_rup.py protocol rup-protocol.yaml --verbose
+
+# Lint (Python)
+ruff check .
+
+# Lint (Markdown/YAML)
+./.venv/bin/python tools/lint_docs.py
 ```
 
 ### Node.js Validator
@@ -118,6 +126,9 @@ node validate_rup.js all ./examples
 
 # Generate sample output
 npm run sample:discovery
+
+# Lint (JavaScript)
+npm run lint
 ```
 
 ### Bash Wrapper
@@ -234,7 +245,7 @@ echo "✅ All validation tests passed"
 When adding new schema `$defs`:
 
 1. Create example JSON file in `examples/` directory
-2. Update `INSTALL.md` with validation command
+2. Update `README.md` with validation command
 3. Add to test suite in both Python and Node.js
 4. Ensure file matches schema exactly (use validator to verify)
 
@@ -366,8 +377,6 @@ node validate_rup.js protocol rup-protocol.yaml 2>&1 | tee debug.log
 ## Additional Resources
 
 - **README.md**: Human-readable overview and quick-start guide
-- **INSTALL.md**: Detailed installation and validation instructions
-- **WARP.md**: WARP.dev specific guidance and workflows
 - **rup-protocol.yaml**: Complete protocol reference (3000+ lines)
 - **rup-schema.json**: JSON Schema reference (1800+ lines)
 

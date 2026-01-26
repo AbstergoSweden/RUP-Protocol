@@ -9,6 +9,8 @@
     "validate:protocol": "node validate_rup.js protocol rup-protocol.yaml",
     "validate:examples": "node validate_rup.js all ./examples",
     "sample:discovery": "node validate_rup.js sample discovery examples/sample_discovery.json",
+    "lint:js": "node --check validate_rup.js tests/validation.test.js",
+    "lint": "npm run lint:js",
     "test": "jest"
   },
   "dependencies": {

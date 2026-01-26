@@ -1,0 +1,132 @@
+{
+  "meta": {
+    "agent_id": "agent_planning",
+    "timestamp": "2026-01-26T17:21:06Z",
+    "duration_ms": 800,
+    "status": "success"
+  },
+  "backlog": [
+    {
+      "id": "RUP-SEC-001",
+      "priority": "P0",
+      "category": "security",
+      "title": "Add YAML alias/file-size limits in validators",
+      "description": "Prevent YAML bomb and oversized input DoS in Python/Node validators.",
+      "scope": {
+        "files": [
+          "validate_rup.py",
+          "validate_rup.js",
+          "SECURITY.md"
+        ],
+        "packages": []
+      },
+      "risk": "low",
+      "estimated_effort_minutes": 20,
+      "verification_method": "Run new security tests and validators on malicious input.",
+      "dependencies": [],
+      "acceptance_criteria": [
+        "Alias limits enforced in both validators",
+        "File size limits enforced for YAML/JSON",
+        "Security policy documents the limits"
+      ]
+    },
+    {
+      "id": "RUP-SEC-002",
+      "priority": "P1",
+      "category": "ci",
+      "title": "Add scheduled link-check workflow",
+      "description": "Run link checks weekly in CI where outbound network is available.",
+      "scope": {
+        "files": [
+          ".github/workflows/link-check.yml"
+        ],
+        "packages": []
+      },
+      "risk": "low",
+      "estimated_effort_minutes": 10,
+      "verification_method": "Workflow exists and runs pytest tests/test_links.py.",
+      "dependencies": [],
+      "acceptance_criteria": [
+        "Scheduled workflow present",
+        "Link check job runs"
+      ]
+    },
+    {
+      "id": "RUP-SEC-003",
+      "priority": "P1",
+      "category": "dx",
+      "title": "Add Markdown/YAML linter",
+      "description": "Enforce basic lint rules for docs and workflows.",
+      "scope": {
+        "files": [
+          "tools/lint_docs.py",
+          "Makefile",
+          "README.md"
+        ],
+        "packages": []
+      },
+      "risk": "low",
+      "estimated_effort_minutes": 10,
+      "verification_method": "Run tools/lint_docs.py and ensure CI step exists.",
+      "dependencies": [],
+      "acceptance_criteria": [
+        "lint_docs.py passes on tracked files",
+        "CI runs Markdown/YAML lint"
+      ]
+    },
+    {
+      "id": "RUP-SEC-004",
+      "priority": "P2",
+      "category": "dx",
+      "title": "Remove redundant docs and unused builder artifacts",
+      "description": "Reduce surface area by removing unused docs and experimental builder files.",
+      "scope": {
+        "files": [
+          "GEMINI.md",
+          "WARP.md",
+          "INSTALL.md",
+          "build_rup.py",
+          "rup-protocol-src.yaml",
+          "definitions/metadata.yaml"
+        ],
+        "packages": []
+      },
+      "risk": "low",
+      "estimated_effort_minutes": 15,
+      "verification_method": "Ensure no references remain and docs stay consistent.",
+      "dependencies": [],
+      "acceptance_criteria": [
+        "Files removed",
+        "Docs updated"
+      ]
+    }
+  ],
+  "selected_items": [
+    "RUP-SEC-001",
+    "RUP-SEC-002",
+    "RUP-SEC-003",
+    "RUP-SEC-004"
+  ],
+  "execution_order": [
+    "RUP-SEC-001",
+    "RUP-SEC-003",
+    "RUP-SEC-002",
+    "RUP-SEC-004"
+  ],
+  "risk_analysis": {
+    "breaking_changes_possible": false,
+    "requires_manual_review": false,
+    "rollback_complexity": "trivial",
+    "affected_packages": []
+  },
+  "estimated_effort": {
+    "total_minutes": 55,
+    "confidence": "high",
+    "breakdown": {
+      "RUP-SEC-001": 20,
+      "RUP-SEC-002": 10,
+      "RUP-SEC-003": 10,
+      "RUP-SEC-004": 15
+    }
+  }
+}

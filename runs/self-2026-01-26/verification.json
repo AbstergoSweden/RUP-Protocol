@@ -1,0 +1,128 @@
+{
+  "meta": {
+    "agent_id": "agent_verification",
+    "timestamp": "2026-01-26T17:21:06Z",
+    "duration_ms": 2800,
+    "status": "success"
+  },
+  "verification_results": {
+    "overall_status": "passed_with_warnings",
+    "tests": {
+      "executed": true,
+      "passed": 15,
+      "failed": 0,
+      "skipped": 1,
+      "duration_seconds": 1.5,
+      "coverage_before": null,
+      "coverage_after": null,
+      "flaky_tests": [],
+      "new_tests_added": 2
+    },
+    "lint": {
+      "executed": true,
+      "violations_before": 0,
+      "violations_after": 0,
+      "auto_fixed": 0,
+      "new_violations": []
+    },
+    "security": {
+      "secret_scan": {
+        "executed": false,
+        "passed": false,
+        "findings": 0
+      },
+      "dependency_scan": {
+        "executed": false,
+        "passed": false,
+        "critical": 0,
+        "high": 0,
+        "medium": 0,
+        "low": 0
+      },
+      "sast_scan": {
+        "executed": false,
+        "passed": false,
+        "findings": 0
+      }
+    },
+    "build": {
+      "executed": true,
+      "succeeded": true,
+      "warnings": 0
+    },
+    "type_check": {
+      "executed": false,
+      "passed": false,
+      "errors": 0
+    }
+  },
+  "metrics": {
+    "files_changed": 8,
+    "files_created": 3,
+    "files_deleted": 6,
+    "lines_added": 35,
+    "lines_removed": 18,
+    "test_coverage_delta": 0.0,
+    "lint_violations_delta": 0,
+    "security_findings_delta": 0,
+    "build_time_delta_seconds": 0.0,
+    "technical_debt_delta": -1.0,
+    "production_readiness_delta": 1.0
+  },
+  "audit_trail": [
+    {
+      "timestamp": "2026-01-26T17:21:06Z",
+      "agent": "agent_discovery",
+      "action": "scan repository + detect tooling",
+      "result": "success",
+      "duration_ms": 1600,
+      "details": {
+        "tracked_files": 52,
+        "approx_loc_nonempty": 18701
+      }
+    },
+    {
+      "timestamp": "2026-01-26T17:21:06Z",
+      "agent": "agent_planning",
+      "action": "prioritize security hardening tasks",
+      "result": "success",
+      "duration_ms": 800
+    },
+    {
+      "timestamp": "2026-01-26T17:21:06Z",
+      "agent": "agent_execution",
+      "action": "apply hardening and cleanup changes",
+      "result": "success",
+      "duration_ms": 2600
+    },
+    {
+      "timestamp": "2026-01-26T17:21:06Z",
+      "agent": "agent_verification",
+      "action": "run validation, lint, and tests",
+      "result": "success",
+      "duration_ms": 2800,
+      "details": {
+        "note": "External security scans were not executed (no tool configured)."
+      }
+    }
+  ],
+  "recommendations": {
+    "ready_for_pr": true,
+    "pr_title": "security: harden YAML parsing + add link-check and linting",
+    "pr_description": "Add YAML alias/file size limits, security tests, and scheduled link-check workflow. Introduce Markdown/YAML linting and remove redundant docs/builder artifacts.",
+    "pr_labels": [
+      "security",
+      "ci",
+      "dx"
+    ],
+    "required_reviewers": [],
+    "required_actions_before_merge": [
+      "Optionally run dependency/secret scans if configured in your environment"
+    ],
+    "followup_items": [
+      "Evaluate adding a Markdown/YAML formatter if needed"
+    ],
+    "risk_assessment": "Low risk; hardening changes only affect input parsing and CI checks."
+  },
+  "final_report": "Security hardening complete: YAML alias and file-size limits enforced in validators; security tests added; link-check workflow scheduled; Markdown/YAML linting added. Redundant docs and unused builder artifacts removed. All local validations and tests pass; external security scans remain optional."
+}

@@ -11,7 +11,14 @@
 
 ## Next
 
-- [ ] Builder polish: replace the placeholder `rup-protocol-src.yaml` stub with real modular includes (or remove `build_rup.py` if out of scope)
-- [ ] Add `legacy/README.md` documenting what is pinned and when it should be updated
-- [ ] Consider adding a small `make validate` / `make test` convenience layer (optional)
+- [ ] Evaluate whether to add a dedicated formatter for Markdown/YAML (optional)
 
+## Done (repo refinements)
+
+- [x] Remove experimental builder artifacts and keep `rup-protocol.yaml` canonical
+- [x] Add a scheduled link-check workflow for environments with outbound network
+- [x] Add lightweight linting for Python (ruff) and JavaScript (node --check)
+- [x] Add Markdown/YAML linting and wire into CI
+- [x] Add YAML alias/file-size hardening in validators + security tests
+- [x] Add `legacy/README.md` documenting what is pinned and when it should be updated
+- [x] Add a small `make validate` / `make test` convenience layer

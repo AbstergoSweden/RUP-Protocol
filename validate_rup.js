@@ -19,6 +19,24 @@
 const fs = require('fs');
 const path = require('path');
 
+function envInt(name, defaultValue) {
+    const raw = process.env[name];
+    if (!raw) return defaultValue;
+    const parsed = parseInt(raw, 10);
+    return Number.isFinite(parsed) && parsed > 0 ? parsed : defaultValue;
+}
+
+const MAX_FILE_BYTES = envInt('RUP_MAX_FILE_BYTES', 5 * 1024 * 1024);
+const MAX_YAML_ALIASES = envInt('RUP_MAX_YAML_ALIASES', 50);
+
+function readFileWithLimit(filePath) {
+    const stats = fs.statSync(filePath);
+    if (stats.size > MAX_FILE_BYTES) {
+        throw new Error(`File too large: ${filePath} (${stats.size} bytes > ${MAX_FILE_BYTES} bytes)`);
+    }
+    return fs.readFileSync(filePath, 'utf8');
+}
+
 // Check for required modules
 let Ajv, addFormats, yaml, glob;
 try {
@@ -88,7 +106,7 @@ function loadSchema(schemaPath) {
         throw new Error(`Schema not found: ${schemaPath}`);
     }
 
-    return JSON.parse(fs.readFileSync(schemaPath, 'utf8'));
+    return JSON.parse(readFileWithLimit(schemaPath));
 }
 
 // Load YAML file
@@ -103,7 +121,7 @@ function loadYaml(filePath) {
         throw new Error(`File not found: ${filePath}`);
     }
 
-    return yaml.load(fs.readFileSync(filePath, 'utf8'));
+    return yaml.load(readFileWithLimit(filePath), { maxAliasCount: MAX_YAML_ALIASES });
 }
 
 // Load JSON file
@@ -118,7 +136,7 @@ function loadJson(filePath) {
         throw new Error(`File not found: ${filePath}`);
     }
 
-    return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+    return JSON.parse(readFileWithLimit(filePath));
 }
 
 // Format validation error

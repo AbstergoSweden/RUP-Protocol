@@ -36,6 +36,9 @@ Thank you for your interest in contributing to RUP Protocol!
 4. Run tests:
 
    ```bash
+   ruff check .
+   ./.venv/bin/python tools/lint_docs.py
+   npm run lint
    pytest
    npm test
    ```

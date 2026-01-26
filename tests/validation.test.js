@@ -36,4 +36,27 @@ describe('RUP Validation', () => {
             }
         }
     });
+
+    it('should reject excessive YAML aliases (billion laughs defense)', () => {
+        const tmpFile = path.join(__dirname, 'alias_bomb.yaml');
+        const lines = ['a0: &a0 lol'];
+        for (let i = 1; i < 20; i += 1) {
+            lines.push(`a${i}: *a0`);
+        }
+        fs.writeFileSync(tmpFile, lines.join('\n') + '\n');
+
+        try {
+            execSync(`node ${VALIDATOR_SCRIPT} protocol ${tmpFile}`, {
+                encoding: 'utf8',
+                env: { ...process.env, RUP_MAX_YAML_ALIASES: '5' },
+                stdio: 'pipe',
+            });
+            throw new Error('Expected validation to fail due to alias limit');
+        } catch (error) {
+            // Expected to fail
+            expect(error.status).toBe(1);
+        } finally {
+            fs.unlinkSync(tmpFile);
+        }
+    });
 });
