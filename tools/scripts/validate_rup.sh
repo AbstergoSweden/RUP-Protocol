@@ -38,9 +38,10 @@ print_error() {
 
 # Main entry point
 main() {
+    VALIDATOR_SCRIPT="$SCRIPT_DIR/../../validators/validate_rup.js"
     # Check if validate_rup.js exists
-    if [ ! -f "$SCRIPT_DIR/validate_rup.js" ]; then
-        print_error "validate_rup.js not found in $SCRIPT_DIR"
+    if [ ! -f "$VALIDATOR_SCRIPT" ]; then
+        print_error "validate_rup.js not found at $VALIDATOR_SCRIPT"
         exit 1
     fi
 
@@ -51,7 +52,7 @@ main() {
     fi
 
     # Delegate to validate_rup.js
-    node "$SCRIPT_DIR/validate_rup.js" "$@"
+    node "$VALIDATOR_SCRIPT" "$@"
 }
 
 main "$@"

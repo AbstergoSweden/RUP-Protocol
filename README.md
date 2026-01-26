@@ -68,26 +68,43 @@ python validate_rup.py all ./examples
 
 ## File Structure
 
-```text
+```
 RUP-Protocol/
-├── README.md                 # This file
-├── rup-protocol.yaml         # Main protocol definition
-├── legacy/                   # Pinned legacy protocol snapshots
-├── runs/                     # Self-targeted run outputs (validated JSON)
-├── rup-schema.json           # JSON Schema for validation
-├── SECURITY.md               # Security policy and reporting
-├── CONTRIBUTING.md           # Contribution guidelines
-├── validate_rup.py           # Python validation script
-├── validate_rup.sh           # Bash validation script
-├── validate_rup.js           # Node.js validation script
-├── tools/                    # Maintenance utilities (e.g., lint_docs.py)
-└── examples/
-    ├── discovery_output.json
-    ├── plan_output.json
-    ├── execution_output.json
-    ├── verification_output.json
-    ├── rup_mock_walkthrough.md   # Detailed end-to-end example
-    └── mock_scenario_summary.json
+├── README.md                         # This file
+├── AGENTS.md                         # Agent development guide
+├── rup-protocol.yaml                 # Canonical protocol definition
+├── rup-schema.json                   # JSON Schema (single source of truth)
+├── security/
+│   ├── SECURITY.md                   # Reporting and policy
+│   └── reports/                      # Historical/archived security reports
+├── governance/
+│   ├── CONTRIBUTING.md               # Contribution guidelines
+│   ├── CODEOWNERS                    # Ownership matrix
+│   └── templates/                    # Issue/PR templates (bug/feature)
+├── tools/                            # Maintenance utilities (e.g., lint_docs.py)
+│   └── scripts/
+│       └── validate_rup.sh           # Wrapper for Node validator script (calls validators/validate_rup.js)
+├── validators/
+│   ├── validate_rup.py               # Python validator (primary implementation)
+│   ├── validate_rup.js               # Node.js validator (parallel implementation)
+│   └── README.md                     # Validator usage summary
+├── examples/                         # Sample agent output files
+│   ├── discovery_output.json
+│   ├── plan_output.json
+│   ├── execution_output.json
+│   ├── verification_output.json
+│   ├── rup_mock_walkthrough.md
+│   └── mock_scenario_summary.json
+├── runs/                             # Self-targeted run outputs (validated JSON)
+│   └── README.md
+├── legacy/                           # Pinned legacy protocol snapshots
+│   ├── rup-protocol-v3.0.yaml
+│   └── rup-protocol-v2.1.yaml
+├── TODO.md                           # Repository TODOs / roadmap
+├── tests/                            # Node and Python test projects
+├── package.json                      # npm dependencies and scripts
+├── requirements.txt                  # Python dependencies
+└── LICENSE                           # CC0-1.0 (Public Domain)
 ```
 
 ## Legacy Versions
@@ -320,16 +337,14 @@ jobs:
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+See [governance/CONTRIBUTING.md](governance/CONTRIBUTING.md) for guidelines.
 
 ## License
 
 [CC0-1.0](LICENSE) - Public Domain
 
----
+## Credits
 
-### Credits
-
-Developed by **Faye Håkansdotter**
+Developed by **Faye Hakansdotter**
 
 Built with ❤️ for AI-assisted development

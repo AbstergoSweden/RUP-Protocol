@@ -99,7 +99,7 @@ function printInfo(message) {
  */
 function loadSchema(schemaPath) {
     if (!schemaPath) {
-        schemaPath = path.join(__dirname, 'rup-schema.json');
+        schemaPath = path.join(__dirname, '..', 'rup-schema.json');
     }
 
     if (!fs.existsSync(schemaPath)) {

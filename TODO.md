@@ -9,12 +9,10 @@
 - [x] Keep tests green; avoid local sandbox failures for link checking
 - [x] Rename project branding to "RUP Protocol" (docs + protocol banner + schema title)
 
-## Next
-
+- ## Next
 - [ ] Evaluate whether to add a dedicated formatter for Markdown/YAML (optional)
 
-## Done (repo refinements)
-
+- ## Done (repo refinements)
 - [x] Remove experimental builder artifacts and keep `rup-protocol.yaml` canonical
 - [x] Add a scheduled link-check workflow for environments with outbound network
 - [x] Add lightweight linting for Python (ruff) and JavaScript (node --check)
@@ -22,3 +20,4 @@
 - [x] Add YAML alias/file-size hardening in validators + security tests
 - [x] Add `legacy/README.md` documenting what is pinned and when it should be updated
 - [x] Add a small `make validate` / `make test` convenience layer
+- [x] Review repo for placeholders, consolidate structure, and document findings in TODO/README

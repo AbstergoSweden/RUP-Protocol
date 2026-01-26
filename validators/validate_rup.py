@@ -92,8 +92,8 @@ def colorize(text: str, color: str) -> str:
 def load_schema(schema_path: Optional[Path] = None) -> Dict[str, Any]:
     """Load the RUP JSON Schema."""
     if schema_path is None:
-        # Look for schema in same directory as script
-        schema_path = Path(__file__).parent / "rup-schema.json"
+        # Look for schema one level above (repo root)
+        schema_path = Path(__file__).parent.parent / "rup-schema.json"
     
     if not schema_path.exists():
         raise FileNotFoundError(f"Schema not found: {schema_path}")
