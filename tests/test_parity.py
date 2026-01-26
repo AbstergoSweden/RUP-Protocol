@@ -4,6 +4,7 @@ import yaml
 import json
 import os
 import shutil
+import sys
 from pathlib import Path
 
 # Paths
@@ -34,7 +35,7 @@ def _check_node_validator():
 NODE_AVAILABLE = _check_node_validator()
 
 def run_python_validator(command, file_path, output_type=None):
-    cmd = ["python3", str(VALIDATE_PY), command, str(file_path)]
+    cmd = [sys.executable, str(VALIDATE_PY), command, str(file_path)]
     if output_type:
         cmd.append(output_type)
     result = subprocess.run(cmd, capture_output=True, text=True)
@@ -113,7 +114,7 @@ def test_parity_invalid_discovery(invalid_discovery_json):
 @pytest.mark.skipif(not NODE_AVAILABLE, reason="Node.js not available")
 def test_parity_protocol_schema():
     # Use the actual protocol file
-    protocol_path = ROOT_DIR / "rup-protocol-v2.1.yaml"
+    protocol_path = ROOT_DIR / "rup-protocol.yaml"
     
     py_code, _, _ = run_python_validator("protocol", protocol_path)
     node_code, _, _ = run_node_validator("protocol", protocol_path)
@@ -158,8 +159,8 @@ def edge_case_yaml(tmp_path):
     # We'll create a minimal valid protocol with anchors.
     
     protocol_content = """
-    schema_version: "2.1.0"
-    protocol_version: "2.1.0"
+    schema_version: "3.0.0"
+    protocol_version: "3.0.0"
     metadata:
         name: &name "Parity Protocol"
         designation: *name
@@ -214,7 +215,7 @@ def test_parity_yaml_anchors(edge_case_yaml):
 def test_parity_schema_version_mismatch(tmp_path):
     protocol_content = """
     schema_version: "1.0.0"
-    protocol_version: "2.1.0"
+    protocol_version: "3.0.0"
     metadata:
         name: "Old Protocol"
         changelog: []

@@ -2,7 +2,7 @@ const { execSync } = require('child_process');
 const path = require('path');
 const fs = require('fs');
 
-const PROTOCOL_FILE = path.join(__dirname, '..', 'rup-protocol-v2.1.yaml');
+const PROTOCOL_FILE = path.join(__dirname, '..', 'rup-protocol.yaml');
 const VALIDATOR_SCRIPT = path.join(__dirname, '..', 'validate_rup.js');
 
 describe('RUP Validation', () => {

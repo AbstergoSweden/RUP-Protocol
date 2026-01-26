@@ -1,4 +1,10 @@
 {
+  "meta": {
+    "agent_id": "agent_planning",
+    "timestamp": "2026-01-23T09:00:06Z",
+    "duration_ms": 1100,
+    "status": "success"
+  },
   "backlog": [
     {
       "id": "ITEM-001",

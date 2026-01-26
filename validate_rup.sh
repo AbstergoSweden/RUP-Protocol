@@ -1,6 +1,6 @@
 #!/bin/bash
 #═══════════════════════════════════════════════════════════════════════════════
-# RUP Protocol Validator v2.1.0 - Bash Script
+# RUP Protocol Validator v3.0.0 - Bash Script
 #
 # Validates RUP protocol YAML files and agent outputs against the JSON Schema.
 #

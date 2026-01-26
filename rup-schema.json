@@ -1,8 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://rup-protocol.dev/schemas/v2.1.0/rup-schema.json",
-  "title": "Repository Upgrade Protocol (RUP) Schema",
-  "description": "JSON Schema for validating RUP v2.1.0 protocol definitions. Provides comprehensive validation for AI-driven repository maintenance and upgrade workflows.",
+  "$id": "https://rup-protocol.dev/schemas/v3.0.0/rup-schema.json",
+  "x_rup_schema_version": "3.0.0",
+  "title": "RUP Protocol Schema",
+  "description": "JSON Schema for validating RUP Protocol v3.0.0 definitions. Provides comprehensive validation for AI-driven repository maintenance and upgrade workflows.",
   "type": "object",
   "required": [
     "schema_version",
@@ -20,7 +21,7 @@
       "pattern": "^\\d+\\.\\d+\\.\\d+$",
       "description": "Semantic version of the schema",
       "examples": [
-        "2.1.0"
+        "3.0.0"
       ]
     },
     "protocol_version": {
@@ -28,7 +29,7 @@
       "pattern": "^\\d+\\.\\d+\\.\\d+$",
       "description": "Semantic version of the protocol",
       "examples": [
-        "2.1.0"
+        "3.0.0"
       ]
     },
     "last_updated": {
@@ -48,6 +49,11 @@
     "maintainer": {
       "type": "string",
       "description": "Protocol maintainer or organization"
+    },
+    "definitions": {
+      "type": "object",
+      "description": "Optional YAML anchor definitions used by the protocol for token efficiency (not required for agent output validation).",
+      "additionalProperties": true
     },
     "metadata": {
       "$ref": "#/$defs/Metadata"
@@ -508,6 +514,32 @@
       },
       "additionalProperties": true
     },
+    "AgentMeta": {
+      "type": "object",
+      "description": "Optional metadata header for agent outputs (useful for audit trails and timing).",
+      "properties": {
+        "agent_id": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "duration_ms": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "success",
+            "partial",
+            "failure"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
     "ErrorMode": {
       "type": "object",
       "required": [
@@ -530,6 +562,10 @@
         },
         "action": {
           "type": "string"
+        },
+        "strategy": {
+          "type": "string",
+          "description": "Optional extended handling strategy (often a multi-line description in YAML)."
         }
       },
       "additionalProperties": false
@@ -631,6 +667,24 @@
     "Guardrails": {
       "type": "object",
       "properties": {
+        "adversarial_defense": {
+          "type": "object",
+          "properties": {
+            "input_sanitization": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "sandboxing": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "additionalProperties": false
+        },
         "hard_rules": {
           "type": "object",
           "additionalProperties": {
@@ -1455,6 +1509,9 @@
         "risk_assessment"
       ],
       "properties": {
+        "meta": {
+          "$ref": "#/$defs/AgentMeta"
+        },
         "repo_metadata": {
           "type": "object",
           "required": [
@@ -1803,6 +1860,9 @@
         "estimated_effort"
       ],
       "properties": {
+        "meta": {
+          "$ref": "#/$defs/AgentMeta"
+        },
         "backlog": {
           "type": "array",
           "items": {
@@ -1962,6 +2022,9 @@
         "local_verification"
       ],
       "properties": {
+        "meta": {
+          "$ref": "#/$defs/AgentMeta"
+        },
         "changes": {
           "type": "array",
           "items": {
@@ -2154,6 +2217,9 @@
         "recommendations"
       ],
       "properties": {
+        "meta": {
+          "$ref": "#/$defs/AgentMeta"
+        },
         "verification_results": {
           "type": "object",
           "required": [

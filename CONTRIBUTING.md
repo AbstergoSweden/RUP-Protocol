@@ -1,6 +1,6 @@
 # Contributing to RUP Protocol
 
-Thank you for your interest in contributing to the Repository Upgrade Protocol (RUP)!
+Thank you for your interest in contributing to RUP Protocol!
 
 ## Development Setup
 
@@ -26,11 +26,11 @@ Thank you for your interest in contributing to the Repository Upgrade Protocol (
    ```
 
 2. Make your changes.
-3. specific validation scripts:
+3. Run the validation scripts:
 
    ```bash
    # Validate the protocol definition
-   python validate_rup.py protocol rup-protocol-v2.1.yaml
+   python validate_rup.py protocol rup-protocol.yaml
    ```
 
 4. Run tests:

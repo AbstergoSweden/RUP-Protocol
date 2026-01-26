@@ -1,15 +1,17 @@
-# Repository Upgrade Protocol (RUP) v2.1.0
+# RUP Protocol
+
+Current version: v3.0.0
 
 > **Production-Grade Repository Automation Framework for AI Agents**
 
-[![Schema Version](https://img.shields.io/badge/schema-v2.1.0-blue)](./rup-schema.json)
+[![Schema Version](https://img.shields.io/badge/schema-v3.0.0-blue)](./rup-schema.json)
 [![License](https://img.shields.io/badge/license-CC0--1.0-green)](./LICENSE)
-[![Languages](https://img.shields.io/badge/languages-14-orange)](./rup-protocol-v2.1.yaml)
+[![Languages](https://img.shields.io/badge/languages-14-orange)](./rup-protocol.yaml)
 [![CI](https://github.com/AbstergoSweden/RUP-Protocol/actions/workflows/ci.yml/badge.svg)](https://github.com/AbstergoSweden/RUP-Protocol/actions/workflows/ci.yml)
 
 ## Overview
 
-RUP (Repository Upgrade Protocol) is a comprehensive framework for AI agents to systematically upgrade repositories toward production readiness. It provides:
+RUP Protocol is a comprehensive framework for AI agents to systematically upgrade repositories toward production readiness. It provides:
 
 - **4-Phase Pipeline**: Discovery → Planning → Execution → Verification
 - **4 Specialized Agents**: Each with explicit I/O contracts and tools
@@ -25,7 +27,7 @@ RUP (Repository Upgrade Protocol) is a comprehensive framework for AI agents to 
 
 ```yaml
 # Import the protocol
-protocol: rup-v2.1.0
+protocol: rup-v3.0.0
 
 # Run minimum viable upgrade
 phases:
@@ -54,7 +56,7 @@ total_time: ~50 minutes
 pip install jsonschema pyyaml
 
 # Validate protocol
-python validate_rup.py protocol rup-protocol-v2.1.yaml
+python validate_rup.py protocol rup-protocol.yaml
 
 # Validate agent outputs
 python validate_rup.py output discovery.json discovery
@@ -69,7 +71,8 @@ python validate_rup.py all ./examples
 ```text
 RUP-Protocol/
 ├── README.md                 # This file
-├── rup-protocol-v2.1.yaml    # Main protocol definition
+├── rup-protocol.yaml         # Main protocol definition
+├── legacy/                   # Pinned legacy protocol snapshots
 ├── rup-schema.json           # JSON Schema for validation
 ├── validate_rup.py           # Python validation script
 ├── validate_rup.sh           # Bash validation script
@@ -82,6 +85,11 @@ RUP-Protocol/
     ├── rup_mock_walkthrough.md   # Detailed end-to-end example
     └── mock_scenario_summary.json
 ```
+
+## Legacy Versions
+
+- `legacy/rup-protocol-v3.0.yaml` (v3.0.0 snapshot)
+- `legacy/rup-protocol-v2.1.yaml` (v2.1.0 snapshot)
 
 ## Protocol Highlights
 
@@ -172,13 +180,15 @@ Types: `fix`, `feat`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`
 
 ## Validation
 
+Note: `rup-protocol.yaml` includes embedded input/output schemas that are JSON-Schema-like (and may include OpenAPI-style `nullable`). The authoritative validator is `rup-schema.json`.
+
 ### Python
 
 ```python
 from validate_rup import load_schema, validate_protocol, load_yaml
 
 schema = load_schema()
-protocol = load_yaml("rup-protocol-v2.1.yaml")
+protocol = load_yaml("rup-protocol.yaml")
 valid, errors = validate_protocol(protocol, schema)
 
 if valid:
@@ -202,7 +212,7 @@ const yaml = require('js-yaml');
 const fs = require('fs');
 
 const schema = JSON.parse(fs.readFileSync('rup-schema.json'));
-const protocol = yaml.load(fs.readFileSync('rup-protocol-v2.1.yaml'));
+const protocol = yaml.load(fs.readFileSync('rup-protocol.yaml'));
 
 const ajv = new Ajv({ allErrors: true, strict: false });
 const validate = ajv.compile(schema);
@@ -217,7 +227,7 @@ if (validate(protocol)) {
 ### Bash
 
 ```bash
-./validate_rup.sh protocol rup-protocol-v2.1.yaml
+./validate_rup.sh protocol rup-protocol.yaml
 ```
 
 ## CI/CD Integration
@@ -238,12 +248,20 @@ jobs:
         with:
           python-version: '3.11'
       - run: pip install jsonschema pyyaml
-      - run: python validate_rup.py protocol rup-protocol-v2.1.yaml
+      - run: python validate_rup.py protocol rup-protocol.yaml
 ```
 
 ## Changelog
 
-### v2.1.0 (2025-01-18)
+### v3.0.0 (2026-01-22)
+
+- Refactored protocol with YAML anchors for token efficiency
+- Added adversarial defense guardrails against prompt injection
+- Added recursive self-healing error loops in execution agent
+- Added explicit dependency verification to reduce hallucinations
+- Unified tool contract definitions
+
+### v2.1.0 (2026-01-18)
 
 - Added monorepo support
 - Added containerization section
@@ -256,7 +274,7 @@ jobs:
 - Added technical debt tracking
 - Added quick-start guide
 
-### v2.0.0 (2025-01-18)
+### v2.0.0 (2026-01-18)
 
 - Split into 4 specialized agents
 - Added evaluation metrics

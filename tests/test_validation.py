@@ -1,10 +1,11 @@
 import subprocess
 import pytest
+import sys
 from pathlib import Path
 
 # Paths
 ROOT_DIR = Path(__file__).parent.parent
-PROTOCOL_FILE = ROOT_DIR / "rup-protocol-v2.1.yaml"
+PROTOCOL_FILE = ROOT_DIR / "rup-protocol.yaml"
 VALIDATOR_SCRIPT = ROOT_DIR / "validate_rup.py"
 
 def test_protocol_file_exists():
@@ -18,7 +19,7 @@ def test_validator_script_exists():
 def test_validate_protocol_execution():
     """Run the validation script against the protocol file."""
     result = subprocess.run(
-        ["python3", str(VALIDATOR_SCRIPT), "protocol", str(PROTOCOL_FILE)],
+        [sys.executable, str(VALIDATOR_SCRIPT), "protocol", str(PROTOCOL_FILE)],
         capture_output=True,
         text=True
     )
@@ -37,7 +38,7 @@ def test_validate_all_fails_on_malformed_yaml(tmp_path):
     malformed_file.write_text("this: is: not: valid yaml\n  bad indent")
     
     result = subprocess.run(
-        ["python3", "validate_rup.py", "all", str(tmp_path)],
+        [sys.executable, "validate_rup.py", "all", str(tmp_path)],
         capture_output=True,
         text=True,
         cwd=ROOT_DIR
@@ -53,10 +54,9 @@ def test_validate_examples_discovery():
         pytest.skip("Discovery example not found")
         
     result = subprocess.run(
-        ["python3", str(VALIDATOR_SCRIPT), "output", str(example_file), "discovery"],
+        [sys.executable, str(VALIDATOR_SCRIPT), "output", str(example_file), "discovery"],
         capture_output=True,
         text=True
     )
     
     assert result.returncode == 0, f"Discovery example validation failed: {result.stderr}"
-

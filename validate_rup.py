@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-RUP Protocol Validator v2.1.0
+RUP Protocol Validator v3.0.0
 
 Validates RUP protocol YAML files and agent outputs against the JSON Schema.
 
@@ -103,21 +103,33 @@ def validate_protocol(
     schema: Dict[str, Any]
 ) -> Tuple[bool, List[ValidationError]]:
     """Validate a protocol definition against the schema."""
-    
-    # Enforce schema version
-    EXPECTED_VERSION = "2.1.0"
-    if 'schema_version' in protocol_data:
+
+    # Enforce schema version (derive expected version from the schema $id).
+    # This keeps the validator behavior consistent when the schema is upgraded.
+    expected_version: Optional[str] = None
+
+    # Prefer an explicit schema self-version if present.
+    schema_self_version = schema.get("x_rup_schema_version")
+    if isinstance(schema_self_version, str):
+        expected_version = schema_self_version
+    else:
+        schema_id = schema.get("$id")
+        if isinstance(schema_id, str):
+            import re
+            m = re.search(r"/v(\d+\.\d+\.\d+)/", schema_id)
+            if m:
+                expected_version = m.group(1)
+
+    if expected_version and 'schema_version' in protocol_data:
         version = protocol_data['schema_version']
-        if version != EXPECTED_VERSION:
-            # We can treat this as a validation error
+        if version != expected_version:
             error = ValidationError(
-                f"Schema version mismatch. Expected {EXPECTED_VERSION}, got {version}",
+                f"Schema version mismatch. Expected {expected_version}, got {version}",
                 validator="const",
-                validator_value=EXPECTED_VERSION,
+                validator_value=expected_version,
                 instance=version,
                 schema_path=["properties", "schema_version"]
             )
-            # Create validator to check the rest
             validator = Draft202012Validator(schema)
             errors = list(validator.iter_errors(protocol_data))
             errors.insert(0, error)
@@ -419,7 +431,7 @@ def cmd_sample(args: argparse.Namespace) -> int:
 def main() -> int:
     """Main entry point."""
     parser = argparse.ArgumentParser(
-        description="RUP Protocol Validator v2.1.0",
+        description="RUP Protocol Validator v3.0.0",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:

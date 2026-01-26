@@ -29,18 +29,18 @@ jobs:
           pip install -r requirements.txt
 
       - name: Install Node.js dependencies
-        run: npm install
+        run: npm ci
 
       - name: Validate Protocol (Python)
-        run: python validate_rup.py protocol rup-protocol-v2.1.yaml
+        run: python validate_rup.py protocol rup-protocol.yaml
 
       - name: Validate Protocol (Node.js)
-        run: node validate_rup.js protocol rup-protocol-v2.1.yaml
+        run: node validate_rup.js protocol rup-protocol.yaml
 
       - name: Validate Protocol (Bash)
         run: |
           chmod +x ./validate_rup.sh
-          ./validate_rup.sh protocol rup-protocol-v2.1.yaml
+          ./validate_rup.sh protocol rup-protocol.yaml
 
       - name: Run Tests
         run: |

@@ -1,8 +1,8 @@
-# RUP Protocol v2.1 — Agent Development Guide
+# RUP Protocol v3.0 — Agent Development Guide
 
 ## Project Overview
 
-**RUP (Repository Upgrade Protocol) v2.1.0** is a production-grade repository automation framework designed for AI agents. It provides a systematic 4-phase pipeline for upgrading repositories toward production readiness:
+**RUP Protocol v3.0.0** is a production-grade repository automation framework designed for AI agents. It provides a systematic 4-phase pipeline for upgrading repositories toward production readiness:
 
 1. **Discovery** - Analyze repository structure, identify gaps and risks
 2. **Planning** - Prioritize work items (P0-P3) and create execution plan
@@ -22,7 +22,7 @@
 ### Core Technologies
 
 - **Schema Definition**: JSON Schema Draft 2020-12 (`rup-schema.json`)
-- **Protocol Definition**: YAML with anchors and special types (`rup-protocol-v2.1.yaml`)
+- **Protocol Definition**: YAML with anchors and special types (`rup-protocol.yaml`)
 - **Validation Framework**: Multi-language implementation (Python, Node.js, Bash)
 
 ### Python Environment
@@ -43,7 +43,10 @@
 
 ```text
 RUP-Protocol/
-├── rup-protocol-v2.1.yaml    # Main protocol definition (AI agent reference)
+├── rup-protocol.yaml         # Main protocol definition (AI agent reference)
+├── legacy/                   # Pinned legacy protocol snapshots
+│   ├── rup-protocol-v3.0.yaml
+│   └── rup-protocol-v2.1.yaml
 ├── rup-schema.json           # JSON Schema (single source of truth)
 ├── validate_rup.py           # Python validator (primary implementation)
 ├── validate_rup.js           # Node.js validator (parallel implementation)
@@ -84,7 +87,7 @@ source .venv/bin/activate
 pip install -r requirements.txt
 
 # Validate protocol definition
-python validate_rup.py protocol rup-protocol-v2.1.yaml
+python validate_rup.py protocol rup-protocol.yaml
 
 # Validate specific agent output
 python validate_rup.py output examples/discovery_output.json discovery
@@ -96,7 +99,7 @@ python validate_rup.py output examples/verification_output.json verification
 python validate_rup.py all ./examples
 
 # Verbose mode (show all errors)
-python validate_rup.py protocol rup-protocol-v2.1.yaml --verbose
+python validate_rup.py protocol rup-protocol.yaml --verbose
 ```
 
 ### Node.js Validator
@@ -107,7 +110,7 @@ npm install
 
 # Validate protocol definition
 npm run validate:protocol
-node validate_rup.js protocol rup-protocol-v2.1.yaml
+node validate_rup.js protocol rup-protocol.yaml
 
 # Validate all examples
 npm run validate:examples
@@ -124,7 +127,7 @@ npm run sample:discovery
 chmod +x validate_rup.sh
 
 # Validate protocol
-./validate_rup.sh protocol rup-protocol-v2.1.yaml
+./validate_rup.sh protocol rup-protocol.yaml
 
 # Validate directory
 ./validate_rup.sh all examples
@@ -205,7 +208,7 @@ Located in `rup-schema.json` under `$defs`:
 
 The primary testing mechanism is **self-validation**:
 
-1. **Protocol Validation**: Ensure `rup-protocol-v2.1.yaml` conforms to schema
+1. **Protocol Validation**: Ensure `rup-protocol.yaml` conforms to schema
 2. **Example Validation**: All example outputs validate against their respective `$defs`
 3. **Cross-Validator Consistency**: Python and Node.js validators produce identical results
 
@@ -213,7 +216,7 @@ The primary testing mechanism is **self-validation**:
 
 ```bash
 # Full validation suite (Python)
-python validate_rup.py protocol rup-protocol-v2.1.yaml && \
+python validate_rup.py protocol rup-protocol.yaml && \
 python validate_rup.py output examples/discovery_output.json discovery && \
 python validate_rup.py output examples/plan_output.json plan && \
 python validate_rup.py output examples/execution_output.json execution && \
@@ -251,7 +254,7 @@ jobs:
         with:
           python-version: '3.11'
       - run: pip install jsonschema pyyaml
-      - run: python validate_rup.py protocol rup-protocol-v2.1.yaml
+      - run: python validate_rup.py protocol rup-protocol.yaml
 ```
 
 ### Validation in Production
@@ -300,7 +303,7 @@ jobs:
 
 ### Protocol Updates
 
-1. **Edit Protocol**: Modify `rup-protocol-v2.1.yaml`
+1. **Edit Protocol**: Modify `rup-protocol.yaml`
 2. **Bump Version**: Update `protocol_version` and `last_updated`
 3. **Add Changelog**: Document changes in `metadata.changelog`
 4. **Validate**: Ensure protocol conforms to schema
@@ -354,10 +357,10 @@ Error: Invalid YAML syntax: mapping values are not allowed here
 
 ```bash
 # Python verbose mode
-python validate_rup.py protocol rup-protocol-v2.1.yaml --verbose
+python validate_rup.py protocol rup-protocol.yaml --verbose
 
 # Node debug output
-node validate_rup.js protocol rup-protocol-v2.1.yaml 2>&1 | tee debug.log
+node validate_rup.js protocol rup-protocol.yaml 2>&1 | tee debug.log
 ```
 
 ## Additional Resources
@@ -365,13 +368,13 @@ node validate_rup.js protocol rup-protocol-v2.1.yaml 2>&1 | tee debug.log
 - **README.md**: Human-readable overview and quick-start guide
 - **INSTALL.md**: Detailed installation and validation instructions
 - **WARP.md**: WARP.dev specific guidance and workflows
-- **rup-protocol-v2.1.yaml**: Complete protocol reference (3000+ lines)
+- **rup-protocol.yaml**: Complete protocol reference (3000+ lines)
 - **rup-schema.json**: JSON Schema reference (1800+ lines)
 
 ## License & Maintenance
 
 **License**: CC0-1.0 (Public Domain) - See LICENSE file
 **Maintainer**: Faye Håkansdotter
-**Version**: 2.1.0 (2026-01-18)
+**Version**: 3.0.0 (2026-01-22)
 
 This is a reference implementation designed for AI agent consumption. Modifications should maintain backward compatibility and update all three validators synchronously.

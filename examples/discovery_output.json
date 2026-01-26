@@ -1,4 +1,10 @@
 {
+  "meta": {
+    "agent_id": "agent_discovery",
+    "timestamp": "2026-01-23T09:00:00Z",
+    "duration_ms": 4800,
+    "status": "success"
+  },
   "repo_metadata": {
     "name": "example-python-library",
     "description": "A sample Python library for demonstration",

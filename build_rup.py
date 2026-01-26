@@ -44,7 +44,7 @@ def build(source_path: Path, output_path: Path):
 
 if __name__ == "__main__":
     src = Path(sys.argv[1]) if len(sys.argv) > 1 else Path("rup-protocol-src.yaml")
-    dest = Path(sys.argv[2]) if len(sys.argv) > 2 else Path("rup-protocol-v2.1.gen.yaml")
+    dest = Path(sys.argv[2]) if len(sys.argv) > 2 else Path("rup-protocol.gen.yaml")
     
     if not src.exists():
         print(f"Error: Source file {src} not found.")

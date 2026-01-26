@@ -2,10 +2,11 @@ import pytest
 import yaml
 import requests
 import re
+import socket
 from pathlib import Path
 
 ROOT_DIR = Path(__file__).parent.parent
-PROTOCOL_PATH = ROOT_DIR / "rup-protocol-v2.1.yaml"
+PROTOCOL_PATH = ROOT_DIR / "rup-protocol.yaml"
 
 def extract_urls(data):
     urls = []
@@ -34,6 +35,13 @@ def test_no_broken_links(protocol_urls):
     """
     Check all URLs found in the protocol YAML file.
     """
+    # Local dev environments (and some CI sandboxes) may block outbound network/DNS.
+    # Skip rather than fail hard when we can't resolve hosts at all.
+    try:
+        socket.gethostbyname("github.com")
+    except OSError:
+        pytest.skip("Network/DNS unavailable; skipping external link checks")
+
     broken_links = []
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'

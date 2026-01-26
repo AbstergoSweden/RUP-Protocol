@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * RUP Protocol Validator v2.1.0 - Node.js Script
+ * RUP Protocol Validator v3.0.0 - Node.js Script
  *
  * Validates RUP protocol YAML files and agent outputs against the JSON Schema.
  *
@@ -180,12 +180,21 @@ function validateProtocol(protocolPath, schemaPath) {
         const schema = loadSchema(schemaPath);
         const protocol = loadYaml(protocolPath);
 
-        const EXPECTED_VERSION = "2.1.0";
-        if (protocol.schema_version && protocol.schema_version !== EXPECTED_VERSION) {
+        // Enforce schema version (derive expected version from the schema $id).
+        // This keeps the validator behavior consistent when the schema is upgraded.
+        let expectedVersion = null;
+        if (schema && typeof schema.x_rup_schema_version === 'string') {
+            expectedVersion = schema.x_rup_schema_version;
+        } else if (schema && typeof schema.$id === 'string') {
+            const m = schema.$id.match(/\/v(\d+\.\d+\.\d+)\//);
+            if (m) expectedVersion = m[1];
+        }
+
+        if (expectedVersion && protocol.schema_version && protocol.schema_version !== expectedVersion) {
              printError(`Protocol validation failed: ${protocolPath}`);
              console.log(`  Found 1 error(s):`);
              console.log(`  ${colorize('✗', 'red')} ${colorize('/schema_version', 'cyan')}`);
-             console.log(`    Message: Schema version mismatch. Expected ${EXPECTED_VERSION}, got ${protocol.schema_version}`);
+             console.log(`    Message: Schema version mismatch. Expected ${expectedVersion}, got ${protocol.schema_version}`);
              return { valid: false, errors: [{ message: "Schema version mismatch" }] };
         }
 
@@ -439,7 +448,7 @@ function generateSample(outputType, outputPath) {
 // Print usage
 function printUsage() {
     console.log(`
-${colorize('RUP Protocol Validator v2.1.0', 'bold')}
+${colorize('RUP Protocol Validator v3.0.0', 'bold')}
 
 ${colorize('Usage:', 'bold')}
     node validate_rup.js protocol <protocol.yaml>
@@ -455,7 +464,7 @@ ${colorize('Output Types:', 'bold')}
     verification    Verification agent output
 
 ${colorize('Examples:', 'bold')}
-    node validate_rup.js protocol rup-protocol-v2.1.yaml
+    node validate_rup.js protocol rup-protocol.yaml
     node validate_rup.js output discovery.json discovery
     node validate_rup.js all ./my-project
     node validate_rup.js sample discovery

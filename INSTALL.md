@@ -1,8 +1,8 @@
-# RUP Protocol v2.1 — Install & Validate
+# RUP Protocol v3.0 — Install & Validate
 
 This folder contains:
 
-* `rup-protocol-v2.1.yaml` — the protocol definition
+* `rup-protocol.yaml` — the protocol definition
 * `rup-schema.json` — JSON Schema to validate the protocol and agent outputs
 * `validate_rup.py` — Python validator
 * `validate_rup.js` — Node.js validator
@@ -23,7 +23,7 @@ pip install -r requirements.txt
 ### 2) Validate the protocol
 
 ```bash
-python validate_rup.py protocol rup-protocol-v2.1.yaml
+python validate_rup.py protocol rup-protocol.yaml
 ```
 
 ### 3) Validate examples
@@ -47,7 +47,7 @@ npm install
 ### 2) Validate
 
 ```bash
-node validate_rup.js protocol rup-protocol-v2.1.yaml
+node validate_rup.js protocol rup-protocol.yaml
 node validate_rup.js all examples
 ```
 
@@ -56,7 +56,7 @@ node validate_rup.js all examples
 ```bash
 cd ~/path/to/RUP-Protocol
 chmod +x validate_rup.sh
-./validate_rup.sh protocol rup-protocol-v2.1.yaml
+./validate_rup.sh protocol rup-protocol.yaml
 ./validate_rup.sh all examples
 ```
 

@@ -8,7 +8,7 @@ RUP-Protocol is a production-grade repository automation framework for AI agents
 
 The repo contains:
 
-- **rup-protocol-v2.1.yaml**: Main protocol definition (production reference)
+- **rup-protocol.yaml**: Main protocol definition (production reference)
 - **rup-schema.json**: JSON Schema (Draft 2020-12) for validating protocol and agent outputs
 - **Validators**: Python, Node.js, and Bash implementations
 - **Examples**: Sample agent output artifacts matching the schema
@@ -25,7 +25,7 @@ python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 
 # Validate protocol definition
-python validate_rup.py protocol rup-protocol-v2.1.yaml
+python validate_rup.py protocol rup-protocol.yaml
 
 # Validate agent outputs (discovery|plan|execution|verification)
 python validate_rup.py output examples/discovery_output.json discovery
@@ -49,7 +49,7 @@ npm run validate:examples
 
 ```bash
 chmod +x validate_rup.sh
-./validate_rup.sh protocol rup-protocol-v2.1.yaml
+./validate_rup.sh protocol rup-protocol.yaml
 ./validate_rup.sh all examples
 ```
 
@@ -93,7 +93,7 @@ The codebase implements a **multi-language schema validation framework**:
 ### Data Flow
 
 ```text
-rup-protocol-v2.1.yaml → Load YAML → Validate against schema → Report errors with context
+rup-protocol.yaml → Load YAML → Validate against schema → Report errors with context
 examples/*.json → Load JSON → Map type → Extract $def → Validate → Report with path
 ```
 
@@ -127,7 +127,7 @@ examples/*.json → Load JSON → Map type → Extract $def → Validate → Rep
 
 ```text
 RUP-Protocol/
-├── rup-protocol-v2.1.yaml    # Protocol definition (read by agents, validated by schema)
+├── rup-protocol.yaml         # Protocol definition (read by agents, validated by schema)
 ├── rup-schema.json           # Single source of truth for validation
 ├── validate_rup.py           # Python validator (primary implementation)
 ├── validate_rup.js           # Node.js validator (parallel implementation)

@@ -1,12 +1,12 @@
 {
-  "name": "rup-protocol-v2.1",
-  "version": "2.1.0",
+  "name": "rup-protocol",
+  "version": "3.0.0",
   "private": true,
-  "description": "Repository Upgrade Protocol validation utilities",
+  "description": "RUP Protocol validation utilities",
   "license": "CC0-1.0",
   "type": "commonjs",
   "scripts": {
-    "validate:protocol": "node validate_rup.js protocol rup-protocol-v2.1.yaml",
+    "validate:protocol": "node validate_rup.js protocol rup-protocol.yaml",
     "validate:examples": "node validate_rup.js all ./examples",
     "sample:discovery": "node validate_rup.js sample discovery examples/sample_discovery.json",
     "test": "jest"

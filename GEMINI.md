@@ -1,10 +1,10 @@
-# RUP-Protocol (Repository Upgrade Protocol)
+# RUP Protocol
 
-The **Repository Upgrade Protocol (RUP)** is a comprehensive framework designed for AI agents to systematically upgrade repositories toward production readiness. It defines a standardized 4-phase pipeline (Discovery, Planning, Execution, Verification) and provides schemas and validation tools to ensure consistency and quality.
+The **RUP Protocol** is a comprehensive framework designed for AI agents to systematically upgrade repositories toward production readiness. It defines a standardized 4-phase pipeline (Discovery, Planning, Execution, Verification) and provides schemas and validation tools to ensure consistency and quality.
 
 ## Key Files
 
-*   `rup-protocol-v2.1.yaml`: The master protocol definition file. Contains all rules, agent personas, and phase definitions.
+*   `rup-protocol.yaml`: The master protocol definition file. Contains all rules, agent personas, and phase definitions.
 *   `rup-schema.json`: The JSON Schema used to validate the protocol file and agent outputs.
 *   `validate_rup.py`: Python script for validating the protocol and agent outputs against the schema.
 *   `validate_rup.js`: Node.js script for validating the protocol and agent outputs.
@@ -21,7 +21,7 @@ The **Repository Upgrade Protocol (RUP)** is a comprehensive framework designed 
 
 2.  **Validate Protocol:**
     ```bash
-    python validate_rup.py protocol rup-protocol-v2.1.yaml
+    python validate_rup.py protocol rup-protocol.yaml
     ```
 
 3.  **Validate Agent Outputs:**
@@ -46,7 +46,7 @@ The **Repository Upgrade Protocol (RUP)** is a comprehensive framework designed 
     ```bash
     npm run validate:protocol
     # OR
-    node validate_rup.js protocol rup-protocol-v2.1.yaml
+    node validate_rup.js protocol rup-protocol.yaml
     ```
 
 3.  **Run Tests:**
@@ -56,7 +56,7 @@ The **Repository Upgrade Protocol (RUP)** is a comprehensive framework designed 
 
 ## Agent Workflow
 
-The protocol enforces a strict 4-phase pipeline. Agents should adhere to the specific inputs and outputs defined in `rup-protocol-v2.1.yaml` for each phase:
+The protocol enforces a strict 4-phase pipeline. Agents should adhere to the specific inputs and outputs defined in `rup-protocol.yaml` for each phase:
 
 1.  **Discovery Phase:** Analyze the repository to identify gaps (Output: `discovery.json`).
 2.  **Planning Phase:** Prioritize tasks based on discovery findings (Output: `plan.json`).

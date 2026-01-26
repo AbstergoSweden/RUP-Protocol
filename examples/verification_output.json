@@ -1,4 +1,10 @@
 {
+  "meta": {
+    "agent_id": "agent_verification",
+    "timestamp": "2026-01-23T09:01:00Z",
+    "duration_ms": 8400,
+    "status": "success"
+  },
   "verification_results": {
     "overall_status": "passed",
     "tests": {

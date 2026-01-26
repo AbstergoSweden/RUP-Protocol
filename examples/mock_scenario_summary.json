@@ -2,8 +2,8 @@
     "scenario": {
         "name": "inventory-api-upgrade",
         "repository": "acme-corp/inventory-api",
-        "description": "Mock execution demonstrating RUP v2.1 end-to-end workflow",
-        "execution_date": "2026-01-19T09:00:00Z"
+        "description": "Mock execution demonstrating RUP v3.0 end-to-end workflow",
+        "execution_date": "2026-01-23T09:00:00Z"
     },
     "phases": {
         "discovery": {

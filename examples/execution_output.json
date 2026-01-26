@@ -1,4 +1,10 @@
 {
+  "meta": {
+    "agent_id": "agent_execution",
+    "timestamp": "2026-01-23T09:00:10Z",
+    "duration_ms": 38200,
+    "status": "success"
+  },
   "changes": [
     {
       "file_path": ".pre-commit-config.yaml",
