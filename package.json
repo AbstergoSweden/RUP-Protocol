@@ -6,10 +6,10 @@
   "license": "CC0-1.0",
   "type": "commonjs",
   "scripts": {
-    "validate:protocol": "node validate_rup.js protocol rup-protocol.yaml",
-    "validate:examples": "node validate_rup.js all ./examples",
-    "sample:discovery": "node validate_rup.js sample discovery examples/sample_discovery.json",
-    "lint:js": "node --check validate_rup.js tests/validation.test.js",
+    "validate:protocol": "node validators/validate_rup.js protocol rup-protocol.yaml",
+    "validate:examples": "node validators/validate_rup.js all ./examples",
+    "sample:discovery": "node validators/validate_rup.js sample discovery examples/sample_discovery.json",
+    "lint:js": "node --check validators/validate_rup.js tests/validation.test.js",
     "lint": "npm run lint:js",
     "test": "jest"
   },

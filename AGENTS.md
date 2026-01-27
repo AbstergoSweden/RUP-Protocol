@@ -28,13 +28,13 @@
 ### Python Environment
 
 - **Dependencies**: `jsonschema>=4.21.0`, `PyYAML>=6.0.1`
-- **Primary Validator**: `validate_rup.py` (recommended)
+- **Primary Validator**: `validators/validate_rup.py` (recommended)
 - **Python Version**: 3.11+ (from CI configuration)
 
 ### Node.js Environment
 
 - **Dependencies**: `ajv@^8.17.1`, `ajv-formats@^3.0.1`, `js-yaml@^4.1.0`, `glob@^10.4.5`
-- **Parallel Validator**: `validate_rup.js`
+- **Parallel Validator**: `validators/validate_rup.js`
 - **Package Manager**: npm
 
 ## Code Organization
@@ -51,9 +51,9 @@ RUP-Protocol/
 ├── rup-schema.json           # JSON Schema (single source of truth)
 ├── SECURITY.md               # Security policy and reporting
 ├── CONTRIBUTING.md           # Contribution guidelines
-├── validate_rup.py           # Python validator (primary implementation)
-├── validate_rup.js           # Node.js validator (parallel implementation)
-├── validate_rup.sh           # Bash wrapper (delegates to Node.js)
+├── validators/validate_rup.py     # Python validator (primary implementation)
+├── validators/validate_rup.js     # Node.js validator (parallel implementation)
+├── tools/scripts/validate_rup.sh  # Bash wrapper (delegates to Node.js)
 ├── package.json              # npm dependencies and scripts
 ├── requirements.txt          # Python dependencies
 ├── tools/                    # Maintenance utilities (e.g., lint_docs.py)
@@ -89,19 +89,19 @@ source .venv/bin/activate
 pip install -r requirements.txt
 
 # Validate protocol definition
-python validate_rup.py protocol rup-protocol.yaml
+python validators/validate_rup.py protocol rup-protocol.yaml
 
 # Validate specific agent output
-python validate_rup.py output examples/discovery_output.json discovery
-python validate_rup.py output examples/plan_output.json plan
-python validate_rup.py output examples/execution_output.json execution
-python validate_rup.py output examples/verification_output.json verification
+python validators/validate_rup.py output examples/discovery_output.json discovery
+python validators/validate_rup.py output examples/plan_output.json plan
+python validators/validate_rup.py output examples/execution_output.json execution
+python validators/validate_rup.py output examples/verification_output.json verification
 
 # Validate all files in directory
-python validate_rup.py all ./examples
+python validators/validate_rup.py all ./examples
 
 # Verbose mode (show all errors)
-python validate_rup.py protocol rup-protocol.yaml --verbose
+python validators/validate_rup.py protocol rup-protocol.yaml --verbose
 
 # Lint (Python)
 ruff check .
@@ -118,11 +118,11 @@ npm install
 
 # Validate protocol definition
 npm run validate:protocol
-node validate_rup.js protocol rup-protocol.yaml
+node validators/validate_rup.js protocol rup-protocol.yaml
 
 # Validate all examples
 npm run validate:examples
-node validate_rup.js all ./examples
+node validators/validate_rup.js all ./examples
 
 # Generate sample output
 npm run sample:discovery
@@ -135,13 +135,13 @@ npm run lint
 
 ```bash
 # Make executable
-chmod +x validate_rup.sh
+chmod +x tools/scripts/validate_rup.sh
 
 # Validate protocol
-./validate_rup.sh protocol rup-protocol.yaml
+./tools/scripts/validate_rup.sh protocol rup-protocol.yaml
 
 # Validate directory
-./validate_rup.sh all examples
+./tools/scripts/validate_rup.sh all examples
 ```
 
 ## Architecture Details
@@ -189,7 +189,7 @@ Located in `rup-schema.json` under `$defs`:
 
 ## Code Style Guidelines
 
-### Python (`validate_rup.py`)
+### Python (`validators/validate_rup.py`)
 
 - **Type Hints**: All functions use explicit type annotations (`Dict[str, Any]`, `List[Optional[...]]`)
 - **Error Handling**: Try/except for import errors with helpful messages
@@ -197,7 +197,7 @@ Located in `rup-schema.json` under `$defs`:
 - **Path Handling**: `pathlib.Path` for cross-platform compatibility
 - **Colors**: ANSI color class with terminal detection (`sys.stdout.isatty()`)
 
-### Node.js (`validate_rup.js`)
+### Node.js (`validators/validate_rup.js`)
 
 - **CommonJS Modules**: `require()` syntax, no ES modules
 - **Error Handling**: Try/catch for module imports, process.exit(1) on failure
@@ -227,11 +227,11 @@ The primary testing mechanism is **self-validation**:
 
 ```bash
 # Full validation suite (Python)
-python validate_rup.py protocol rup-protocol.yaml && \
-python validate_rup.py output examples/discovery_output.json discovery && \
-python validate_rup.py output examples/plan_output.json plan && \
-python validate_rup.py output examples/execution_output.json execution && \
-python validate_rup.py output examples/verification_output.json verification && \
+python validators/validate_rup.py protocol rup-protocol.yaml && \
+python validators/validate_rup.py output examples/discovery_output.json discovery && \
+python validators/validate_rup.py output examples/plan_output.json plan && \
+python validators/validate_rup.py output examples/execution_output.json execution && \
+python validators/validate_rup.py output examples/verification_output.json verification && \
 echo "✅ All validation tests passed"
 
 # Full validation suite (Node.js)
@@ -265,7 +265,7 @@ jobs:
         with:
           python-version: '3.11'
       - run: pip install jsonschema pyyaml
-      - run: python validate_rup.py protocol rup-protocol.yaml
+      - run: python validators/validate_rup.py protocol rup-protocol.yaml
 ```
 
 ### Validation in Production
@@ -368,10 +368,10 @@ Error: Invalid YAML syntax: mapping values are not allowed here
 
 ```bash
 # Python verbose mode
-python validate_rup.py protocol rup-protocol.yaml --verbose
+python validators/validate_rup.py protocol rup-protocol.yaml --verbose
 
 # Node debug output
-node validate_rup.js protocol rup-protocol.yaml 2>&1 | tee debug.log
+node validators/validate_rup.js protocol rup-protocol.yaml 2>&1 | tee debug.log
 ```
 
 ## Additional Resources

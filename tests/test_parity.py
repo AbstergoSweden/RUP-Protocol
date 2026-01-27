@@ -7,8 +7,8 @@ from pathlib import Path
 
 # Paths
 ROOT_DIR = Path(__file__).parent.parent
-VALIDATE_PY = ROOT_DIR / "validate_rup.py"
-VALIDATE_JS = ROOT_DIR / "validate_rup.js"
+VALIDATE_PY = ROOT_DIR / "validators" / "validate_rup.py"
+VALIDATE_JS = ROOT_DIR / "validators" / "validate_rup.js"
 SCHEMA_PATH = ROOT_DIR / "rup-schema.json"
 FIXTURES_DIR = Path(__file__).parent / "fixtures" / "parity"
 

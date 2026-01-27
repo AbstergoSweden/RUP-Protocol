@@ -10,9 +10,8 @@ against this repository.
 ## Validation
 
 ```bash
-./.venv/bin/python validate_rup.py output runs/self-2026-01-26/discovery.json discovery
-./.venv/bin/python validate_rup.py output runs/self-2026-01-26/plan.json plan
-./.venv/bin/python validate_rup.py output runs/self-2026-01-26/execution.json execution
-./.venv/bin/python validate_rup.py output runs/self-2026-01-26/verification.json verification
+./.venv/bin/python validators/validate_rup.py output runs/self-2026-01-26/discovery.json discovery
+./.venv/bin/python validators/validate_rup.py output runs/self-2026-01-26/plan.json plan
+./.venv/bin/python validators/validate_rup.py output runs/self-2026-01-26/execution.json execution
+./.venv/bin/python validators/validate_rup.py output runs/self-2026-01-26/verification.json verification
 ```
-

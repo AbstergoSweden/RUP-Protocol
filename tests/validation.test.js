@@ -3,7 +3,7 @@ const path = require('path');
 const fs = require('fs');
 
 const PROTOCOL_FILE = path.join(__dirname, '..', 'rup-protocol.yaml');
-const VALIDATOR_SCRIPT = path.join(__dirname, '..', 'validate_rup.js');
+const VALIDATOR_SCRIPT = path.join(__dirname, '..', 'validators', 'validate_rup.js');
 
 describe('RUP Validation', () => {
     it('should verify protocol file exists', () => {
@@ -16,7 +16,7 @@ describe('RUP Validation', () => {
 
     it('should validate the protocol file successfully', () => {
         try {
-            const output = execSync(`node ${VALIDATOR_SCRIPT} protocol ${PROTOCOL_FILE}`, { encoding: 'utf8' });
+        const output = execSync(`node ${VALIDATOR_SCRIPT} protocol ${PROTOCOL_FILE}`, { encoding: 'utf8' });
             expect(output.toLowerCase()).toContain('valid');
         } catch (error) {
             console.error(error.stdout);

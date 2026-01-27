@@ -6,7 +6,7 @@ from pathlib import Path
 # Paths
 ROOT_DIR = Path(__file__).parent.parent
 PROTOCOL_FILE = ROOT_DIR / "rup-protocol.yaml"
-VALIDATOR_SCRIPT = ROOT_DIR / "validate_rup.py"
+VALIDATOR_SCRIPT = ROOT_DIR / "validators" / "validate_rup.py"
 
 def test_protocol_file_exists():
     """Verify that the protocol YAML file exists."""
@@ -38,7 +38,7 @@ def test_validate_all_fails_on_malformed_yaml(tmp_path):
     malformed_file.write_text("this: is: not: valid yaml\n  bad indent")
     
     result = subprocess.run(
-        [sys.executable, "validate_rup.py", "all", str(tmp_path)],
+        [sys.executable, "validators/validate_rup.py", "all", str(tmp_path)],
         capture_output=True,
         text=True,
         cwd=ROOT_DIR

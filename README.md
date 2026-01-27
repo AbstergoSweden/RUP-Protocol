@@ -56,14 +56,14 @@ total_time: ~50 minutes
 pip install jsonschema pyyaml
 
 # Validate protocol
-python validate_rup.py protocol rup-protocol.yaml
+python validators/validate_rup.py protocol rup-protocol.yaml
 
 # Validate agent outputs
-python validate_rup.py output discovery.json discovery
-python validate_rup.py output plan.json plan
+python validators/validate_rup.py output discovery.json discovery
+python validators/validate_rup.py output plan.json plan
 
 # Validate all files in a directory
-python validate_rup.py all ./examples
+python validators/validate_rup.py all ./examples
 ```
 
 ## File Structure
@@ -272,10 +272,10 @@ if (validate(protocol)) {
 }
 ```
 
-### Bash
+### Bash (wrapper)
 
 ```bash
-./validate_rup.sh protocol rup-protocol.yaml
+./tools/scripts/validate_rup.sh protocol rup-protocol.yaml
 ```
 
 ## CI/CD Integration
@@ -296,7 +296,7 @@ jobs:
         with:
           python-version: '3.11'
       - run: pip install jsonschema pyyaml
-      - run: python validate_rup.py protocol rup-protocol.yaml
+      - run: python validators/validate_rup.py protocol rup-protocol.yaml
 ```
 
 ## Changelog

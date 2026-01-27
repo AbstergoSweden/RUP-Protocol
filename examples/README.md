@@ -26,15 +26,15 @@ This folder contains example **agent output artifacts** that conform to the `rup
 
 ```bash
 cd ~/path/to/RUP-Protocol
-python validate_rup.py output examples/discovery_output.json discovery
-python validate_rup.py output examples/plan_output.json plan
-python validate_rup.py output examples/execution_output.json execution
-python validate_rup.py output examples/verification_output.json verification
+python validators/validate_rup.py output examples/discovery_output.json discovery
+python validators/validate_rup.py output examples/plan_output.json plan
+python validators/validate_rup.py output examples/execution_output.json execution
+python validators/validate_rup.py output examples/verification_output.json verification
 ```
 
 ### Node
 
 ```bash
 cd ~/path/to/RUP-Protocol
-node validate_rup.js all examples
+node validators/validate_rup.js all ./examples
 ```

@@ -30,13 +30,13 @@ jobs:
       - name: Lint Markdown/YAML
         run: python tools/lint_docs.py
       - name: Validate Protocol
-        run: python validate_rup.py protocol rup-protocol.yaml
+        run: python validators/validate_rup.py protocol rup-protocol.yaml
       - name: Validate Examples
         run: |
-          python validate_rup.py output examples/discovery_output.json discovery
-          python validate_rup.py output examples/plan_output.json plan
-          python validate_rup.py output examples/execution_output.json execution
-          python validate_rup.py output examples/verification_output.json verification
+          python validators/validate_rup.py output examples/discovery_output.json discovery
+          python validators/validate_rup.py output examples/plan_output.json plan
+          python validators/validate_rup.py output examples/execution_output.json execution
+          python validators/validate_rup.py output examples/verification_output.json verification
       - name: Run pytest
         run: pytest
 
@@ -56,12 +56,12 @@ jobs:
       - name: Run lint
         run: npm run lint
       - name: Validate Protocol
-        run: node validate_rup.js protocol rup-protocol.yaml
+        run: node validators/validate_rup.js protocol rup-protocol.yaml
       - name: Validate Examples
         run: |
-          node validate_rup.js output examples/discovery_output.json discovery
-          node validate_rup.js output examples/plan_output.json plan
-          node validate_rup.js output examples/execution_output.json execution
-          node validate_rup.js output examples/verification_output.json verification
+          node validators/validate_rup.js output examples/discovery_output.json discovery
+          node validators/validate_rup.js output examples/plan_output.json plan
+          node validators/validate_rup.js output examples/execution_output.json execution
+          node validators/validate_rup.js output examples/verification_output.json verification
       - name: Run jest
         run: npm test

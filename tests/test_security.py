@@ -5,7 +5,7 @@ from pathlib import Path
 
 
 ROOT_DIR = Path(__file__).parent.parent
-VALIDATOR_SCRIPT = ROOT_DIR / "validate_rup.py"
+VALIDATOR_SCRIPT = ROOT_DIR / "validators" / "validate_rup.py"
 
 
 def test_yaml_alias_limit_blocks_billion_laughs(tmp_path):

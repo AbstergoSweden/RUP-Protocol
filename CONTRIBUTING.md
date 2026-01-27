@@ -30,7 +30,7 @@ Thank you for your interest in contributing to RUP Protocol!
 
    ```bash
    # Validate the protocol definition
-   python validate_rup.py protocol rup-protocol.yaml
+   python validators/validate_rup.py protocol rup-protocol.yaml
    ```
 
 4. Run tests:
