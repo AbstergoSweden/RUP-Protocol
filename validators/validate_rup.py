@@ -487,7 +487,8 @@ Examples:
     parser.add_argument(
         '--schema', '-s',
         type=Path,
-        help='Path to rup-schema.json (default: same directory as script)'
+        default=Path(os.getenv('RUP_SCHEMA_PATH')) if os.getenv('RUP_SCHEMA_PATH') else None,
+        help='Path to rup-schema.json (default: same directory as script or RUP_SCHEMA_PATH)'
     )
     parser.add_argument(
         '--verbose', '-v',
