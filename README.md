@@ -335,6 +335,20 @@ jobs:
 
 - Initial release
 
+## Dependency Updates
+
+Python dependencies are pinned in `requirements.txt`. To update them:
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+pip install -U jsonschema PyYAML pytest requests ruff
+pip freeze | grep -E '^(jsonschema|PyYAML|pytest|requests|ruff)==' > requirements.txt
+```
+
+Node dependencies are locked via `package-lock.json` and updated with `npm install` + `npm audit`.
+
 ## Contributing
 
 See [governance/CONTRIBUTING.md](governance/CONTRIBUTING.md) for guidelines.
